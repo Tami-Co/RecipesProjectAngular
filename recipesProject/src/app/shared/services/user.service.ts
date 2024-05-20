@@ -14,9 +14,9 @@ export class UserService {
     return this.http.get<User[]>(this.baseUrl)
   }
   signUp(u:User){
-    return this.http.post<User>(`${this.baseUrl}`,u)
+    return this.http.post<User>(`${this.baseUrl}/signup`,u)
   }
   signIn(u:User){
-    this.http.post<User>(`${this.baseUrl}`,u)
+    return this.http.post<User>(`${this.baseUrl}/signin`,u)
   }
 }
