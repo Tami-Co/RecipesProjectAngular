@@ -45,7 +45,7 @@ export class LoginCompComponent {
   }
   singIn(em: string, password: string) {
     this.server
-      .signIn(new User(em, password))
+      .signIn(em, password)
       .subscribe((x) => console.log('login', x))
   }
 }
