@@ -9,7 +9,7 @@ import { environment } from '../../../environments/environment';
 export class UserService {
 
   private http = inject(HttpClient);
-  private baseUrl = `${environment.apiURL}/users`
+  private usersURL = `${environment.apiURL}/users`
 
   public get token(): string | null {
     return localStorage.getItem('myToken');
@@ -21,12 +21,12 @@ export class UserService {
   }
 
   getUsers() {
-    return this.http.get<User[]>(this.baseUrl)
+    return this.http.get<User[]>(this.usersURL)
   }
   signUp(u: User) {
-    return this.http.post<User>(`${this.baseUrl}/signup`, u)
+    return this.http.post<User>(`${this.usersURL}/signup`, u)
   }
-  signIn(email: string, password: string) {
-    return this.http.post<{user:User;token:string}>(`${this.baseUrl}/signin`, { email, password })
+  signIn(u:User) {
+    return this.http.post<{user:User;token:string}>(`${this.usersURL}/signin`,u)
   }
 }

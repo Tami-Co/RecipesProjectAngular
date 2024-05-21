@@ -1,6 +1,6 @@
 
 
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -11,24 +11,22 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { UserService } from '../../shared/services/user.service';
 import { User } from '../../shared/models/user';
-import {MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 @Component({
   selector: 'app-login-comp',
   standalone: true,
   templateUrl: './login-comp.component.html',
   styleUrl: './login-comp.component.scss',
-  imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatButtonModule, MatDividerModule, MatIconModule,MatCardModule],
+  imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatButtonModule, MatDividerModule, MatIconModule, MatCardModule],
 })
 export class LoginCompComponent {
-  longText = `The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog
-  from Japan. A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was
-  originally bred for hunting.`;
+  private userService = inject(UserService);
   email = new FormControl('', [Validators.required, Validators.email]);
   hide = true;
 
   errorMessage = '';
 
-  constructor(private server: UserService) {
+  constructor() {
     merge(this.email.statusChanges, this.email.valueChanges)
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateErrorMessage());
@@ -43,9 +41,12 @@ export class LoginCompComponent {
       this.errorMessage = '';
     }
   }
-  singIn(em: string, password: string) {
-    this.server
-      .signIn(em, password)
-      .subscribe((x) => console.log('login', x))
+  singIn(em: HTMLInputElement, password: HTMLInputElement) {
+    this.userService
+      .signIn({email:em.value,password: password.value})
+      .subscribe((x) => {
+        console.log('login', x);
+        this.userService.token = x.token;
+      })
   }
 }
