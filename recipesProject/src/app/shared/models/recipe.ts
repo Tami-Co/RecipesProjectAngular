@@ -1,19 +1,14 @@
-export class Recipe {
-    constructor(
-        public id?: number,
-        public name?: string,
-        public description?: string,
-        //לשנות למינימל סכמה
-        public categories?: string,
-        public preparationTime?: number,
-        public level?: number,
-        public dateAdded?: Date,
-        //לשנות למינימל סכמה
-        public layersCake?: string,
-        public instructions?: string,
-        public img?: string,
-        public isPrivate?: boolean,
-        //לשנות למינימל סכמה
-        public user?: string,
-    ) { }
+export interface Recipe {
+    id?: number,
+    name?: string,
+    description?: string,
+    categories?: {id:number,description:string},
+    preparationTime?: number,
+    level?: number,
+    dateAdded?: Date,
+    layersCake?: {description:string,ingredients:[string]},
+    instructions?: string,
+    img?: string,
+    isPrivate?: boolean,
+    user?: {id:number,nameUser:string},
 }

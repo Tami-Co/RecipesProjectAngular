@@ -1,22 +1,32 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { User } from '../models/user';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private baseUrl='http://localhost:5000/users'
-  constructor(private http:HttpClient) { 
 
+  private http = inject(HttpClient);
+  private baseUrl = `${environment.apiURL}/users`
+
+  public get token(): string | null {
+    return localStorage.getItem('myToken');
   }
-  getUsers(){
+  public set token(token: string | null) {
+    if (token) {
+      localStorage.setItem('myToken', token);
+    }
+  }
+
+  getUsers() {
     return this.http.get<User[]>(this.baseUrl)
   }
-  signUp(u:User){
-    return this.http.post<User>(`${this.baseUrl}/signup`,u)
+  signUp(u: User) {
+    return this.http.post<User>(`${this.baseUrl}/signup`, u)
   }
-  signIn(email:string,password:string){
-    return this.http.post<User>(`${this.baseUrl}/signin`,{email,password})
+  signIn(email: string, password: string) {
+    return this.http.post<{user:User;token:string}>(`${this.baseUrl}/signin`, { email, password })
   }
 }
