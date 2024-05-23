@@ -1,1 +1,29 @@
-<app-login-comp></app-login-comp>
+<!-- <app-login-comp></app-login-comp> -->
+
+<nav class="navBar">
+    <a routerLink="allRecipes">
+        <button mat-button class="btnNavBar">המתכונים שלנו</button>
+    </a>
+    @if(userService.token){
+    <a>
+        <button mat-button class="btnNavBar">שיתוף מתכון</button>
+    </a>
+    <a>
+        <button mat-button class="btnNavBar">המתכונים שלי</button>
+    </a>
+    }
+
+    <a routerLink="login">
+        <button mat-button class="btnNavBar">התחברות</button>
+    </a>
+    @if(userService.token){
+      <a>
+        <button mat-button class="btnNavBar">התנתקות</button>
+    </a>    
+    }
+  
+    <a routerLink="signUp">
+        <button mat-button class="btnNavBar">הרשמה</button>
+    </a>
+</nav>
+<router-outlet></router-outlet>

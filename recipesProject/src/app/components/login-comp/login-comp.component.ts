@@ -1,52 +1,74 @@
 
 
-import { Component, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { Component, EventEmitter, Output, inject, output } from '@angular/core';
+import { FormControl, Validators, FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule, NgIf, JsonPipe } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { merge } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
-import { UserService } from '../../shared/services/user.service';
-import { User } from '../../shared/models/user';
 import { MatCardModule } from '@angular/material/card';
+import { UserService } from '../../shared/services/user.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { merge } from 'rxjs';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-login-comp',
   standalone: true,
   templateUrl: './login-comp.component.html',
-  styleUrl: './login-comp.component.scss',
-  imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatButtonModule, MatDividerModule, MatIconModule, MatCardModule],
+  styleUrls: ['./login-comp.component.scss'],
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDividerModule,
+    MatCardModule,
+    NgIf,
+    JsonPipe
+  ],
 })
 export class LoginCompComponent {
   private userService = inject(UserService);
+  private router = inject(Router);
   email = new FormControl('', [Validators.required, Validators.email]);
   hide = true;
-
   errorMessage = '';
 
-  constructor() {
-    merge(this.email.statusChanges, this.email.valueChanges)
-      .pipe(takeUntilDestroyed())
-      .subscribe(() => this.updateErrorMessage());
+  @Output() moveToSignUpEvent = new EventEmitter<{ email: string, password: string }>();
+
+  singIn(form: NgForm) {
+    console.log("details", form.value.email, form.value.password);
+
+    this.userService
+      .signIn({ email: form.value.email.email, password: form.value.password })
+      .subscribe({
+        next: (x) => {
+          console.log('login', x);
+          this.userService.token = x.token;
+          this.router.navigate(['/allRecipes']); // Replace with your desired route
+        },
+        error: (err) => {
+          console.error('Login error', err);
+          // Handle the error appropriately
+          this.errorMessage = 'אחד הפרטים שגויים, המשתמש לא נמצא';
+        }
+      });
+
   }
 
-  updateErrorMessage() {
-    if (this.email.hasError('required')) {
-      this.errorMessage = 'You must enter a value';
-    } else if (this.email.hasError('email')) {
-      this.errorMessage = 'Not a valid email';
-    } else {
-      this.errorMessage = '';
-    }
+
+  moveToSignUp(form: NgForm) {
+    console.log("1", form.value.email, form.value.password);
+    this.moveToSignUpEvent.emit({ email: form.value.email.email, password: form.value.password });
+    this.router.navigate(['/signUp']);
+
   }
-  singIn(em: HTMLInputElement, password: HTMLInputElement) {
-    this.userService
-      .signIn({email:em.value,password: password.value})
-      .subscribe((x) => {
-        console.log('login', x);
-        this.userService.token = x.token;
-      })
-  }
+
 }
