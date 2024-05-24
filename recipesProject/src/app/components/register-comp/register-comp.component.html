@@ -1,5 +1,69 @@
-<p>register-comp works!</p>
-<div *ngIf="userData">
-    <p>Welcome {{ userData.email }}! Please complete your registration.</p>
-    <!-- Add your form or other elements here -->
-  </div>
+<form ngForm #myForm="ngForm" (ngSubmit)="signUp(myForm)">
+    <mat-card class="example-card">
+        <mat-card-header>
+            <mat-card-title>הרשמה</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div ngModelGroup="userName" class="example-container">
+                <mat-form-field>
+                    <mat-label>שם משתמש</mat-label>
+                    <input pattern="^[a-zA-Zא-ת\s]+$" minlength="2" maxlength="30" required matInput type="text"
+                        name="userName" ngModel #userNameModel="ngModel">
+                    <mat-error *ngIf="userNameModel.getError('minlength')">שם מכיל מינימום 2 תווים </mat-error>
+                    <mat-error *ngIf="userNameModel.getError('maxlength')">שם מכיל מקסימום 30 תווים </mat-error>
+                    <mat-error *ngIf="userNameModel.getError('required')"> שדה חובה</mat-error>
+                    <mat-error *ngIf="userNameModel.getError('pattern')">שם מכיל אותיות בלבד </mat-error>
+
+                </mat-form-field>
+            </div>
+            <div ngModelGroup="email" class="example-container">
+                <mat-form-field>
+                    <mat-label> מייל</mat-label>
+                    <input
+                        pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|net|org|edu|gov|mil|biz|info|mobi|name|aero|asia|jobs|museum)$"
+                        type="text" name="email" ngModel #emailModel="ngModel" matInput placeholder="email@gmail.com"
+                        required>
+
+                    <mat-error *ngIf="emailModel.getError('required')"> שדה חובה</mat-error>
+                    <mat-error *ngIf="emailModel.getError('pattern')">מייל לא תקין</mat-error>
+
+                </mat-form-field>
+
+            </div>
+
+            <div class="example-container">
+                <mat-form-field>
+                    <mat-label> סיסמה</mat-label>
+                    <input minlength="2" maxlength="30" type="password" name="password" ngModel #passwordModel="ngModel"
+                        matInput [type]="hide ? 'password' : 'text'" required pattern="(?=.*[a-zA-Z])(?=.*[0-9]).+$">
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                    <mat-error *ngIf="passwordModel.getError('minlength')">סיסמה מכילה מינימום 2 תווים </mat-error>
+                    <mat-error *ngIf="passwordModel.getError('maxlength')">סיסמה מכילה מקסימום 30 תווים </mat-error>
+                    <mat-error *ngIf="passwordModel.getError('required')"> שדה חובה</mat-error>
+                    <mat-error *ngIf="passwordModel.getError('pattern')">סיסמה חייבת להכיל אות באנגלית ומספר
+                    </mat-error>
+                </mat-form-field>
+
+            </div>
+            <div ngModelGroup="address" class="example-container">
+                <mat-form-field>
+                    <mat-label>כתובת</mat-label>
+
+                    <input pattern="^[a-zA-Zא-ת0-9\s]+$" required matInput type="text" name="address" ngModel
+                        #addressModel="ngModel">
+                    <mat-error *ngIf="addressModel.getError('required')"> שדה חובה</mat-error>
+                    <mat-error *ngIf="addressModel.getError('pattern')">שם מכיל אותיות ומספרים בלבד </mat-error>
+                </mat-form-field>
+            </div>
+        </mat-card-content>
+        <p class="error-message">{{errorMessage}}</p>
+        <mat-card-actions>
+            <div class="example-button-row">
+                <button [disabled]="myForm.invalid" mat-flat-button color="primary">כניסה</button>
+            </div>
+        </mat-card-actions>
+    </mat-card>
+</form>

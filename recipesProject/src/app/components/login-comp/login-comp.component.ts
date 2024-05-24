@@ -1,6 +1,4 @@
 
-
-
 import { Component, EventEmitter, Output, inject, output } from '@angular/core';
 import { FormControl, Validators, FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule, NgIf, JsonPipe } from '@angular/common';
@@ -41,7 +39,6 @@ export class LoginCompComponent {
   hide = true;
   errorMessage = '';
 
-  @Output() moveToSignUpEvent = new EventEmitter<{ email: string, password: string }>();
 
   singIn(form: NgForm) {
     console.log("details", form.value.email, form.value.password);
@@ -63,10 +60,12 @@ export class LoginCompComponent {
 
   }
 
-
+  @Output()
+  moveToSignUpEvent: EventEmitter<{ email: string, password: string }> = new EventEmitter<{ email: string, password: string }>();
   moveToSignUp(form: NgForm) {
-    console.log("1", form.value.email, form.value.password);
-    this.moveToSignUpEvent.emit({ email: form.value.email.email, password: form.value.password });
+    const email = form.value.email;
+    const password = form.value.password;
+    this.moveToSignUpEvent.emit({ email, password });
     this.router.navigate(['/signUp']);
 
   }

@@ -24,9 +24,9 @@ export class UserService {
     return this.http.get<User[]>(this.usersURL)
   }
   signUp(u: User) {
-    return this.http.post<User>(`${this.usersURL}/signup`, u)
+    return this.http.post<{ user: User, token: string }>(`${this.usersURL}/signup`, u)
   }
-  signIn(u:User) {
-    return this.http.post<{user:User;token:string}>(`${this.usersURL}/signin`,u)
+  signIn(u: User) {
+    return this.http.post<{ user: User; token: string }>(`${this.usersURL}/signin`, u)
   }
 }
