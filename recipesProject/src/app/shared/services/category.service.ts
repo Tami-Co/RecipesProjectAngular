@@ -9,13 +9,13 @@ import { environment } from '../../../environments/environment';
 export class CategoryService {
 
   private http = inject(HttpClient);
-  private baseUrl = `${environment.apiURL}/users`
+  private baseUrl = `${environment.apiURL}/categories`
 
   getCategories() {
     return this.http.get<Category[]>(this.baseUrl);
   }
-  getCategoryByName(name:string) {
-    return this.http.get<Category[]>(`${this.baseUrl}/:${name}`);
+  getCategoryByName(name: string) {
+    return this.http.get<Category>(`${this.baseUrl}/${name}`);
   }
   getCategorieswithRecipes() {
     return this.http.get<Category[]>(this.baseUrl);

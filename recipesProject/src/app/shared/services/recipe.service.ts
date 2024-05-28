@@ -9,7 +9,7 @@ import { environment } from '../../../environments/environment';
 export class RecipeService {
  
   private http = inject(HttpClient);
-  private baseUrl = `${environment.apiURL}/users`
+  private baseUrl = `${environment.apiURL}/recipes`
 
   getRecipes() {
     return this.http.get<Recipe[]>(this.baseUrl);

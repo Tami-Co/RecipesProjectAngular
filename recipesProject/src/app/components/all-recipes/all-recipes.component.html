@@ -1,1 +1,43 @@
-<p>all-recipes works!</p>
+<div>
+    <div>
+        <mat-form-field>
+            <mat-label>Favorite food</mat-label>
+            <mat-select>
+                @for (c of listCategories; track c) {
+                <mat-option [value]="c.description"(click)="filterCategory(c.description)">{{c.description}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <!-- <div>
+        <mat-form-field>
+            <mat-label>Favorite food</mat-label>
+            <mat-select>
+                @for (food of foods; track food) {
+                <mat-option [value]="food.value">{{food.viewValue}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field>
+            <mat-label>Favorite food</mat-label>
+            <mat-select>
+                @for (food of foods; track food) {
+                <mat-option [value]="food.value">{{food.viewValue}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+    </div> -->
+
+</div>
+
+<div class="allRecipes">
+    @for(recipe of listRecipes; track recipe._id){
+    <div class="singleRec">
+        <app-one-recipe [oneItem]="recipe"></app-one-recipe>
+
+    </div>
+
+    }
+</div>
