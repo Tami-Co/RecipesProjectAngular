@@ -1,37 +1,53 @@
 <div>
     <div>
         <mat-form-field>
-            <mat-label>Favorite food</mat-label>
+            <mat-label>סינון לפי קטגוריה</mat-label>
             <mat-select>
                 @for (c of listCategories; track c) {
-                <mat-option [value]="c.description"(click)="filterCategory(c.description)">{{c.description}}</mat-option>
-                }
-            </mat-select>
-        </mat-form-field>
-    </div>
-    <!-- <div>
-        <mat-form-field>
-            <mat-label>Favorite food</mat-label>
-            <mat-select>
-                @for (food of foods; track food) {
-                <mat-option [value]="food.value">{{food.viewValue}}</mat-option>
+                <mat-option [value]="c.description"
+                    (click)="filterByCategory(c.description)">{{c.description}}</mat-option>
                 }
             </mat-select>
         </mat-form-field>
     </div>
     <div>
         <mat-form-field>
-            <mat-label>Favorite food</mat-label>
+            <mat-label>סינון לפי רמת קושי</mat-label>
             <mat-select>
-                @for (food of foods; track food) {
-                <mat-option [value]="food.value">{{food.viewValue}}</mat-option>
-                }
+                <!-- @for (l of levels; track l) {
+                <mat-option (click)="filterByLevel(l)" [value]="l">{{l}}</mat-option>
+                } -->
+                <mat-option (click)="filterByLevel(1)" [value]="1">{{1}}</mat-option>
+                <mat-option (click)="filterByLevel(2)" [value]="2">{{2}}</mat-option>
+                <mat-option (click)="filterByLevel(3)" [value]="3">{{3}}</mat-option>
+                <mat-option (click)="filterByLevel(4)" [value]="4">{{4}}</mat-option>
+                <mat-option (click)="filterByLevel(5)" [value]="5">{{5}}</mat-option>
+
             </mat-select>
         </mat-form-field>
-    </div> -->
+    </div>
+    <div>
+        <mat-form-field>
+            <mat-label>סינון לפי זמן הכנה</mat-label>
+            <mat-select>
+                <!-- @for (l of levels; track l) {
+                <mat-option (click)="filterByLevel(l)" [value]="l">{{l}}</mat-option>
+                } -->
+                <mat-option (click)="filterByTime(15)">דקות 15</mat-option>
+                <mat-option (click)="filterByTime(30)">30 דקות</mat-option>
+                <mat-option (click)="filterByTime(60)">1 שעה</mat-option>
+                <mat-option (click)="filterByTime(90)">1.5 שעות</mat-option>
+                <mat-option (click)="filterByTime(120)">2 שעות</mat-option>
+
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <button (click)="cancleFilter()" mat-flat-button color="primary">בטל סינונים</button>
 
 </div>
-
+<div>
+    <h3 *ngIf="flag">אין לנו עוד מה להציג</h3>
+</div>
 <div class="allRecipes">
     @for(recipe of listRecipes; track recipe._id){
     <div class="singleRec">
@@ -41,3 +57,6 @@
 
     }
 </div>
+<mat-paginator (page)="onPageChange($event)" class="custom-paginator" [length]="100" [pageSize]="12"
+    aria-label="Select page">
+</mat-paginator>

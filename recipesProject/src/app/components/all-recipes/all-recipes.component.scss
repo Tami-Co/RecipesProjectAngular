@@ -5,3 +5,9 @@
 .singleRec{
     margin-left: 5%;
 }
+.custom-paginator .mat-paginator-page-size {
+    display: none;
+}
+::ng-deep .custom-paginator .mat-paginator-page-size {
+    display: none;
+}
