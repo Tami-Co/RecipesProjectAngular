@@ -1,14 +1,14 @@
 export interface Recipe {
-    id?: number,
+    id?: string,
     name?: string,
     description?: string,
-    categories?: {id:number,description:string},
+    categories?: [{ description: string }],
     preparationTime?: number,
     level?: number,
     dateAdded?: Date,
-    layersCake?: {description:string,ingredients:[string]},
+    layersCake?: [{ description: string, ingredients: [string] }],
     instructions?: string,
     img?: string,
     isPrivate?: boolean,
-    user?: {id:number,nameUser:string},
+    user?: { id: string, nameUser: string },
 }

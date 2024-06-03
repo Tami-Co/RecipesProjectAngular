@@ -1,88 +1,124 @@
-<p>recipe-form works!</p>
-<form [formGroup]="recipeForm">
-    <div>
-        <mat-form-field>
-            <mat-label>שם מתכון</mat-label>
-            <input matInput type="text" formControlName="name">
-        </mat-form-field>
-        {{recipeForm.controls["name"].errors }}
+<div class="myForm">
+    <form [formGroup]="recipeForm" (ngSubmit)="addRecipe()">
+        <div>
+            <mat-form-field>
+                <mat-label>שם מתכון</mat-label>
+                <input matInput type="text" formControlName="name">
+                <mat-error *ngIf="recipeForm.controls['name'].hasError('required')">שדה חובה</mat-error>
+                <mat-error *ngIf="recipeForm.controls['name'].hasError('minlength')">שם מכיל מינימום 2 תווים</mat-error>
+                <mat-error *ngIf="recipeForm.controls['name'].hasError('maxlength') ">שם מכיל מקסימום 50
+                    תווים</mat-error>
+                <mat-error *ngIf="recipeForm.controls['name'].hasError('pattern')">שם מכיל אותיות בלבד</mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>תיאור </mat-label>
+                <textarea matInput type="text" formControlName="description"></textarea>
+                <mat-error *ngIf="recipeForm.controls['description'].hasError('required')">שדה חובה</mat-error>
+                <mat-error *ngIf="recipeForm.controls['description'].hasError('minlength')">תיאור מכיל מינימום 2
+                    תווים</mat-error>
+                <mat-error *ngIf="recipeForm.controls['description'].hasError('maxlength') ">תיאור מכיל מקסימום 200
+                    תווים</mat-error>
+                <mat-error *ngIf="recipeForm.controls['description'].hasError('pattern')">תיאור מכיל אותיות ומספרים
+                    בלבד</mat-error>
+            </mat-form-field>
 
-    </div>
-    <div>
-        <mat-form-field>
-            <mat-label>תיאור </mat-label>
-            <textarea matInput type="text" formControlName="description"></textarea>
-        </mat-form-field>
-
-    </div>
-    <div formArrayName="category">
-        <mat-form-field>
-            <mat-label>בחירת קטגוריה</mat-label>
-            <mat-select>
-                @for (c of listCategories; track c) {
-                <!-- קונטרול שם -->
-                <mat-option formControlName="" value="c.description">{{c.description}}</mat-option>
-                }
-            </mat-select>
-        </mat-form-field>
-    </div>
-    <div>
-        <mat-form-field floatLabel="always">
-            <mat-label>משך זמן הכנה</mat-label>
-            <input matInput formControlName="preparationTime" type="number" class="example-right-align" placeholder="0">
-            <!-- <span matTextPrefix>$&nbsp;</span> -->
-        </mat-form-field>
-    </div>
-
-    <!-- <div>
-        <mat-form-field>
-            <mat-label>בחירת רמה</mat-label>
-            <mat-select>
-                <mat-option formControlName="level" value="1">1</mat-option>
-                <mat-option formControlName="level" value="2">2</mat-option>
-                <mat-option formControlName="level" value="3">3</mat-option>
-                <mat-option formControlName="level" value="4">4</mat-option>
-                <mat-option formControlName="level" value="5">5</mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div> -->
-    <div formArrayName="layersCake">
-        :שכבות העוגה
-        <div formGroupName="">
-            <div formControlName="description">
-                <mat-form-field>
-                    <mat-label>תיאור שכבה</mat-label>
-                    <input matInput>
-                </mat-form-field>
-            </div>
-
-            <div formArrayName="ingredients">
-                <mat-form-field>
-                    <mat-label>הוסף מוצר</mat-label>
-                    <input matInput>
-                </mat-form-field>
-            </div>
+        </div>
+        <div formArrayName="category">
+            <mat-form-field>
+                <mat-label>בחירת קטגוריה</mat-label>
+                <mat-select multiple>
+                    @for (c of listCategories; track c) {
+                    <!-- קונטרול שם -->
+                    <mat-option value="c.description">{{c.description}}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
 
         </div>
 
-    </div>
 
-    <div>
-        <mat-form-field>
-            <mat-label>הוראות הכנה </mat-label>
-            <textarea matInput type="text" formControlName="instructions"></textarea>
-        </mat-form-field>
+        <div>
+            <mat-form-field floatLabel="always">
+                <mat-label>משך זמן הכנה</mat-label>
+                <input matInput formControlName="preparationTime" type="number" class="example-right-align"
+                    placeholder="0">
+                <!-- <span matTextPrefix>$&nbsp;</span> -->
+                <mat-error *ngIf="recipeForm.controls['preparationTime'].hasError('required')">שדה חובה</mat-error>
+                <mat-error *ngIf="recipeForm.controls['preparationTime'].hasError('maxlength') ">זמן הכנה לא
+                    תקין</mat-error>
+            </mat-form-field>
+        </div>
 
-    </div>
-    <!-- תמונהההההההההההההההההההההההההההה!!!!!!!! -->
-    <!-- <div>
-        <mat-form-field>
-            <mat-label>העלה תמונה</mat-label>
-            <input type="file" matInput  formControlName="img">
-        </mat-form-field>   
-    </div> -->
-    <div>
-        <mat-checkbox formControlName="isPrivate" class="example-margin">האם המתכון פרטי?</mat-checkbox>
-    </div>
+        <div>
+            <mat-form-field>
+                <mat-label>בחירת רמה</mat-label>
+                <mat-select formControlName="level">
+                    <mat-option value="1">1</mat-option>
+                    <mat-option value="2">2</mat-option>
+                    <mat-option value="3">3</mat-option>
+                    <mat-option value="4">4</mat-option>
+                    <mat-option value="5">5</mat-option>
+                </mat-select>
+                <mat-error *ngIf="recipeForm.controls['level'].hasError('required')">שדה חובה</mat-error>
 
-</form>
+            </mat-form-field>
+        </div>
+        <div formArrayName="layersCake">
+            <p> :שכבות העוגה</p>
+            <div>
+                <div>
+                    <mat-form-field>
+                        <mat-label>תיאור שכבה</mat-label>
+                        <input formControlName="description" type="text" matInput>
+                    </mat-form-field>
+                </div>
+
+                <div formArrayName="ingredients">
+                    <mat-form-field>
+                        <mat-label>הוסף מוצר</mat-label>
+                        <input matInput>
+                    </mat-form-field>
+                </div>
+
+            </div>
+            <button (click)="addLayer()" mat-flat-button color="primary">שכבה נוספת </button>
+
+        </div>
+
+        <div>
+            <mat-form-field>
+                <mat-label>הוראות הכנה </mat-label>
+                <textarea matInput type="text" formControlName="instructions"></textarea>
+                <mat-error *ngIf="recipeForm.controls['instructions'].hasError('required')">שדה חובה</mat-error>
+                <mat-error *ngIf="recipeForm.controls['instructions'].hasError('minlength')"> מינימום 2
+                    תווים</mat-error>
+                <mat-error *ngIf="recipeForm.controls['instructions'].hasError('maxlength') "> מקסימום 10000
+                    תווים</mat-error>
+            </mat-form-field>
+
+        </div>
+        <!-- תמונהההההההההההההההההההההההההההה!!!!!!!! -->
+        <div>
+            <mat-form-field>
+                <mat-label>הכנס קישור לתמונה</mat-label>
+                <input type="text" matInput formControlName="img">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-checkbox formControlName="isPrivate" class="example-margin">האם המתכון פרטי?</mat-checkbox>
+            <mat-error
+                *ngIf="recipeForm.controls['isPrivate'].hasError('required') && recipeForm.controls['isPrivate'].touched">שדה
+                חובה</mat-error>
+
+        </div>
+
+        <div class="example-button-row">
+            <button mat-flat-button color="primary">הוספה</button>
+            <!-- [disabled]="recipeForm.invalid" -->
+        </div>
+        <p *ngIf="isAdd">המתכון נוסף בהצלחה</p>
+
+    </form>
+</div>

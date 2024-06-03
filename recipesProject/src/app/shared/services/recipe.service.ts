@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Recipe } from '../models/recipe';
 import { environment } from '../../../environments/environment';
@@ -7,16 +7,20 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class RecipeService {
- 
+
+
   private http = inject(HttpClient);
   private baseUrl = `${environment.apiURL}/recipes`
 
+  public get token(): string | null {
+    return localStorage.getItem('myToken');
+  }
   // getRecipes() {
   //   return this.http.get<Recipe[]>(this.baseUrl);
   // }
   getRecipes(page?: number) {
     let params = new HttpParams();
-    
+
     if (page !== undefined) {
       params = params.set('page', page.toString());
     }
@@ -35,9 +39,16 @@ export class RecipeService {
     return this.http.get<Recipe[]>(`${this.baseUrl}/recipesByTime/${time}`);
   }
 
-  addRecipes(r: Recipe) {
-    return this.http.post<Recipe>(`${this.baseUrl}`, r);
+  addRecipe(r: Recipe) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${this.token}`
+      })
+    };
+
+    return this.http.post<Recipe>(`${this.baseUrl}`, r, httpOptions);
   }
+
   //לבדוק אם טוב ככה לשרשר את הID
   updateRecipes(r: Recipe) {
     return this.http.put<Recipe>(`${this.baseUrl}/${r.id}`, r);

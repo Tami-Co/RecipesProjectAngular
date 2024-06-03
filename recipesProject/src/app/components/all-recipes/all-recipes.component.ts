@@ -44,12 +44,12 @@ export class AllRecipesComponent implements OnInit {
   filterByCategory(category: string) {
     this.categoriesService.getCategoryByName(category).subscribe((data) => {
       this.recipesOfCategory = data as any[];
-      this.listRecipes = data.recipes as any?? [];
+      this.listRecipes = data.recipes as any ?? [];
       console.log("cat", data);
     });
   }
 
-    
+
   filterByLevel(level: number) {
 
     this.recipesService.getRecipes().subscribe((data) => {
@@ -83,8 +83,7 @@ export class AllRecipesComponent implements OnInit {
   onPageChange(event: PageEvent) {
     if (event.previousPageIndex !== undefined) {
       const startIndex = event.pageIndex * event.pageSize;
-      const endIndex = (event.pageIndex) * event.pageSize;
-
+      const endIndex = event.pageIndex * event.pageSize;
       if (event.pageIndex > event.previousPageIndex) {
         this.onNextPage(endIndex);
       } else if (event.pageIndex < event.previousPageIndex) {
