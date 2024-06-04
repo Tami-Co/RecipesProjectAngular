@@ -25,16 +25,27 @@
             </mat-form-field>
 
         </div>
-        <div formArrayName="category">
+        <div>
             <mat-form-field>
                 <mat-label>בחירת קטגוריה</mat-label>
-                <mat-select multiple>
+                <mat-select formControlName="category" multiple>
                     @for (c of listCategories; track c) {
-                    <!-- קונטרול שם -->
-                    <mat-option value="c.description">{{c.description}}</mat-option>
+                    <mat-option [value]="c.description">{{c.description}}</mat-option>
                     }
                 </mat-select>
             </mat-form-field>
+            <mat-form-field>
+                <mat-label>הוספת קטגוריה חדשה</mat-label>
+                <input matInput type="text" formControlName="newCategory">
+                <mat-error *ngIf="recipeForm.controls['newCategory'].hasError('minlength')">קטגוריה מכילה מינימום 2
+                    תווים</mat-error>
+                <mat-error *ngIf="recipeForm.controls['newCategory'].hasError('maxlength') ">קטגוריה מכילה מקסימום 50
+                    תווים</mat-error>
+                <mat-error *ngIf="recipeForm.controls['newCategory'].hasError('pattern')">קטגוריה מכילה אותיות
+                    בלבד</mat-error>
+            </mat-form-field>
+            <!--  ביחד של בחירת קטגוריה להוסיף בדיקת חובה על שתי האפשרויות -->
+            <mat-error *ngIf="hasCategory">חובה לבחור או להוסיף קטגוריה</mat-error>
 
         </div>
 
@@ -65,9 +76,11 @@
 
             </mat-form-field>
         </div>
+
+
         <div formArrayName="layersCake">
-            <p> :שכבות העוגה</p>
-            <div>
+            <p> :שלבי הכנה</p>
+            <div *ngFor="let layer of layersCake.controls; let layerIndex = index" [formGroupName]="layerIndex">
                 <div>
                     <mat-form-field>
                         <mat-label>תיאור שכבה</mat-label>
@@ -76,15 +89,15 @@
                 </div>
 
                 <div formArrayName="ingredients">
-                    <mat-form-field>
-                        <mat-label>הוסף מוצר</mat-label>
-                        <input matInput>
-                    </mat-form-field>
+                    <div *ngFor="let ingredient of getIngredients(layerIndex).controls; let ingredientIndex = index">
+                        <mat-form-field>
+                            <mat-label>הוסף מוצר</mat-label>
+                            <input matInput (blur)="addingredient(layerIndex)" [formControlName]="ingredientIndex">
+                        </mat-form-field>
+                    </div>
                 </div>
-
             </div>
-            <button (click)="addLayer()" mat-flat-button color="primary">שכבה נוספת </button>
-
+            <button type="button" (click)="addLayer()" mat-flat-button color="primary">שכבה נוספת </button>
         </div>
 
         <div>
