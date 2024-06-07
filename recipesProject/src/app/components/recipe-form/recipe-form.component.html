@@ -128,10 +128,11 @@
         </div>
 
         <div class="example-button-row">
-            <button mat-flat-button color="primary">הוספה</button>
-            <!-- [disabled]="recipeForm.invalid" -->
+            <button [disabled]="recipeForm.invalid" mat-flat-button color="primary">הוספה</button>
         </div>
-        <p *ngIf="isAdd">המתכון נוסף בהצלחה</p>
 
     </form>
 </div>
+
+
+

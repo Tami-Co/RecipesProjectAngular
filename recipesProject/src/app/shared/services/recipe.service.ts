@@ -27,8 +27,8 @@ export class RecipeService {
 
     return this.http.get<Recipe[]>(this.baseUrl, { params });
   }
-  getRecipeById(id: number) {
-    return this.http.get<Recipe[]>(`${this.baseUrl}/${id}`);
+  getRecipeById(id: string) {
+    return this.http.get<Recipe>(`${this.baseUrl}/${id}`);
   }
 
   getRecipesOfUser(id: number) {
@@ -50,12 +50,15 @@ export class RecipeService {
   }
 
   //לבדוק אם טוב ככה לשרשר את הID
-  updateRecipes(r: Recipe) {
-    return this.http.put<Recipe>(`${this.baseUrl}/${r.id}`, r);
+  updateRecipe(r: Recipe) {
+    return this.http.put<Recipe>(`${this.baseUrl}/${r._id}`, r);
   }
-  deleteRecipes(id: number) {
-    return this.http.delete(`${this.baseUrl}/${id}`);
+  deleteRecipe(id: string) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${this.token}`
+      })
+    };
+    return this.http.delete(`${this.baseUrl}/${id}`, httpOptions);
   }
-
-
 }

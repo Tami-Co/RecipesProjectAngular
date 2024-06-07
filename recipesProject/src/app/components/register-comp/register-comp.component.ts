@@ -11,6 +11,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 import { merge } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-register-comp',
@@ -27,25 +28,37 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     JsonPipe,
     MatFormFieldModule,
     MatInputModule,
-    
+
   ],
   templateUrl: './register-comp.component.html',
   styleUrl: './register-comp.component.scss'
 })
 export class RegisterCompComponent implements OnInit {
-
-  @Input() userData: { email: string, password: string } | null = null;
   email = new FormControl('', [Validators.required, Validators.email]);
+
+  email1: string = '';
+  password: string = '';
   hide = true;
   errorMessage = '';
+
   private userService = inject(UserService);
   private router = inject(Router);
 
-  constructor() {
-    console.log("3", this.userData);
+  constructor(private route: ActivatedRoute) {
+    const navigation = this.router.getCurrentNavigation();
+    const state = navigation?.extras.state as { email: string, password: string };
+
+    if (state) {
+      this.email1 = state.email;
+      this.password = state.password;
+    }
+
+    console.log("kk",this.email1,this.password);
+    
     merge(this.email.statusChanges, this.email.valueChanges)
-    .pipe(takeUntilDestroyed())
-    .subscribe(() => this.updateErrorMessage());
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => this.updateErrorMessage());
+
   }
   updateErrorMessage() {
     if (this.email.hasError('required')) {
@@ -57,14 +70,22 @@ export class RegisterCompComponent implements OnInit {
     }
   }
   ngOnInit() {
-    if (this.userData) {
-      console.log('User data received', this.userData);
-    }
+
+    // this.email.setValue(this.email1); // Set the initial value of the email FormControl
+
   }
+
+
   signUp(form: NgForm) {
     console.log("details", form.value.address.address, form.value.userName.userName, form.value.email.email, form.value.password);
     this.userService
-      .signUp({ userName: form.value.userName.userName, email: form.value.email.email, password: form.value.password, address: form.value.address.address, role: 'user' })
+      .signUp({
+        userName: form.value.userName.userName,
+        email: form.value.email.email,
+        password: form.value.password,
+        address: form.value.address.address,
+        role: 'user'
+      })
       .subscribe({
         next: (x) => {
           console.log('signup', x);
@@ -73,7 +94,6 @@ export class RegisterCompComponent implements OnInit {
         },
         error: (err) => {
           console.error('SignUp error', err);
-          // Handle the error appropriately
           this.errorMessage = 'המשתמש כבר קיים במערכת ';
         }
       });

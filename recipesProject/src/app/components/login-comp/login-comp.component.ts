@@ -11,7 +11,7 @@ import { MatCardModule } from '@angular/material/card';
 import { UserService } from '../../shared/services/user.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { merge } from 'rxjs';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-comp',
@@ -60,14 +60,18 @@ export class LoginCompComponent {
 
   }
 
-  @Output()
-  moveToSignUpEvent: EventEmitter<{ email: string, password: string }> = new EventEmitter<{ email: string, password: string }>();
+
   moveToSignUp(form: NgForm) {
     const email = form.value.email;
     const password = form.value.password;
-    this.moveToSignUpEvent.emit({ email, password });
-    this.router.navigate(['/signUp']);
-
+    let navigationExtras: NavigationExtras = {
+      state: {
+        email: email.email,
+        password: password
+      }
+    };
+    this.router.navigate(['/signUp'], navigationExtras);
   }
+
 
 }

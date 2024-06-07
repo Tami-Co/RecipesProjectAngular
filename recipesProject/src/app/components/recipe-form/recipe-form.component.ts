@@ -14,13 +14,15 @@ import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { NgFor, NgIf } from '@angular/common';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+
 
 import { Category } from '../../shared/models/category';
 
 @Component({
   selector: 'app-recipe-form',
   standalone: true,
-  imports: [NgFor, MatDividerModule, NgIf, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatTooltipModule, MatIconModule, MatCheckboxModule],
+  imports: [MatSnackBarModule, NgFor, MatDividerModule, NgIf, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatTooltipModule, MatIconModule, MatCheckboxModule],
   templateUrl: './recipe-form.component.html',
   styleUrl: './recipe-form.component.scss'
 })
@@ -30,10 +32,11 @@ export class RecipeFormComponent implements OnInit {
   private categoryService = inject(CategoryService);
   private recipeService = inject(RecipeService);
   listCategories: any[] = [];
-  isAdd: boolean = false;
   categoy2: any[] = [];
   hasCategory: boolean = false;
-  constructor(private fb: FormBuilder) {
+  private snackBar = inject(MatSnackBar);
+
+  constructor(private fb: FormBuilder,) {
     this.recipeForm = fb.group({
       name: fb.control('', [Validators.required, Validators.minLength(2), Validators.maxLength(50), Validators.pattern("^[a-zA-Zא-ת\\s]+$")]),
       description: fb.control('', [Validators.required, Validators.minLength(2), Validators.maxLength(200), Validators.pattern("^[a-zA-Zא-ת\\s]+$")]),
@@ -79,9 +82,7 @@ export class RecipeFormComponent implements OnInit {
     this.layersCake.push(
       this.fb.group({
         description: this.fb.control('', [Validators.required, Validators.minLength(2), Validators.maxLength(70), Validators.pattern("^[a-zA-Zא-ת\\s]+$")]),
-        ingredients: this.fb.array([
-          this.fb.control('', Validators.required),
-        ]),
+        ingredients: this.fb.array([this.fb.control('', Validators.required),]),
       })
     );
 
@@ -89,22 +90,28 @@ export class RecipeFormComponent implements OnInit {
   addingredient(layerIndex: number) {
     const ingredients = this.getIngredients(layerIndex);
     if (ingredients.at(ingredients.length - 1).value !== '') {
-      ingredients.push(this.fb.control('', Validators.required));
+      ingredients.push(this.fb.control(''));
     }
   }
   addRecipe() {
-    console.log("addrec");
 
-    if (this.recipeForm.value.category !== null) {
-      if (this.recipeForm.value.newCategory !== '') {
-        this.recipeForm.value.category.push(this.recipeForm.value.newCategory)
-      }
+    if (this.recipeForm.value.newCategory && this.recipeForm.value.category) {
+      this.recipeForm.value.category.push(this.recipeForm.value.newCategory)
     }
     else {
-      this.recipeForm.value.category = this.recipeForm.value.newCategory
+      if (!this.recipeForm.value.category) {
+        this.recipeForm.value.category = [this.recipeForm.value.newCategory]
+      }
+
     }
-
-
+    this.recipeForm.value.layersCake.forEach((layer: any) => {
+      const ingredients = layer.ingredients;
+      for (let i = ingredients.length - 1; i >= 0; i--) {
+        if (ingredients[i] === '') {
+          ingredients.splice(i, 1);
+        }
+      }
+    });
     this.recipeForm.value.category.forEach((item: any) => {
       let obj = { "description": item };
       this.categoy2.push(obj);
@@ -121,27 +128,31 @@ export class RecipeFormComponent implements OnInit {
         level: this.recipeForm.value.level,
         dateAdded: new Date(),
         layersCake: this.recipeForm.value.layersCake,
-        // layersCake: [{ description: "Layer 1", ingredients: ["Ingredient 1"] }],
         instructions: this.recipeForm.value.instructions,
         img: this.recipeForm.value.img,
         isPrivate: this.recipeForm.value.isPrivate,
-        user: { id: '663e0b1761331d51708c7415', nameUser: 'Moshe' },
+        // user: { id: 'aa', nameUser: 'aa' },
       })
       .subscribe({
         next: (x) => {
           console.log('addRec', x);
-          this.isAdd = true;
+
+
           setTimeout(() => {
+            this.openSnackBar('!המתכון הוסף בהצלחה', 'סגור');
             this.router.navigate(['/allRecipes']);
           }, 3000);
         },
         error: (err) => {
           console.error('add recipe  error', err);
+          this.openSnackBar('שגיאה', 'סגור');
         }
       });
   }
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 10000,
+    });
+  }
 }
-
-
-
 

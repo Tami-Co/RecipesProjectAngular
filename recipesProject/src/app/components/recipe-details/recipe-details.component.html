@@ -1,0 +1,35 @@
+<div class="recipe-details">
+    <div class="actions">
+      <button (click)="deleteRecipe()" mat-flat-button color="primary">מחק מתכון</button>
+    </div>
+    <div class="recipe-header">
+      <h2>{{recipe.name}}</h2>
+    </div>
+    <div class="recipe-body">
+      <img [src]="recipe.img" alt="{{recipe.name}}" class="recipe-image" />
+      <p class="description">{{recipe.description}}</p>
+      <!-- <p class="preparation-time">זמן הכנה: {{recipe.preparationTime | timeFormatPipe}}</p> -->
+      <div class="level">
+        רמת קושי:
+        <!-- <ng-container *appStarLevel="recipe.level">
+          <mat-icon>star</mat-icon>
+        </ng-container> -->
+      </div>
+      <p class="date-added">תאריך הוספה: {{recipe.dateAdded | date:'dd/MM/yyyy'}}</p>
+      <p class="user">הוסף על ידי: {{recipe.user?.nameUser}}</p>
+      <div class="layers">
+        <h3>שכבות:</h3>
+        <div *ngFor="let layer of recipe.layersCake">
+          <h4>{{layer.description}}</h4>
+          <ul>
+            <li *ngFor="let ingredient of layer.ingredients">{{ingredient}}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="instructions">
+        <h3>הוראות:</h3>
+        <p>{{recipe.instructions}}</p>
+      </div>
+    </div>
+  </div>
+  
