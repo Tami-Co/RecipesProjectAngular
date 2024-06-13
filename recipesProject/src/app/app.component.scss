@@ -1,8 +1,19 @@
+
 .navBar{
     direction: rtl;
-    padding-bottom: 2%;
     padding-top: 2%;
 }
 .mat-tab-group {
     margin-bottom: 48px;
   }
+  body {
+    direction: rtl;
+    text-align: right;
+}
+.user{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 4%;
+
+}

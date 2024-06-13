@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { User } from '../models/user';
 import { environment } from '../../../environments/environment';
@@ -15,9 +15,15 @@ export class UserService {
     return localStorage.getItem('myToken');
   }
   public set token(token: string | null) {
-    if (token) {
+    console.log("settoken");
+    if (token == 'logOut') {
+      localStorage.setItem('myToken', '');
+
+    }
+    else if (token) {
       localStorage.setItem('myToken', token);
     }
+
   }
 
   getUsers() {
@@ -28,5 +34,16 @@ export class UserService {
   }
   signIn(u: User) {
     return this.http.post<{ user: User; token: string }>(`${this.usersURL}/signin`, u)
+  }
+  getUser() {
+    console.log("getUser");
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${this.token}`
+      })
+    };
+
+    return this.http.get<User>(`${this.usersURL}/userId`, httpOptions)
   }
 }

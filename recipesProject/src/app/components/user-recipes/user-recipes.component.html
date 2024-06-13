@@ -1,0 +1,9 @@
+<p>user-recipes works!</p>
+<div class="allRecipes">
+    <mat-grid-list cols="3" rowHeight="1:1">
+        <mat-grid-tile *ngFor="let recipe of listRecipes">
+            <app-one-recipe [oneItem]="recipe"></app-one-recipe>
+        </mat-grid-tile>
+    </mat-grid-list>
+    <div *ngIf="listRecipes==[]">עדיין לא שיתפת מתכונים </div>
+</div>

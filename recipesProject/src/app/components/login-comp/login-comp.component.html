@@ -8,29 +8,21 @@
         <mat-form-field>
           <mat-label>הקש מייל</mat-label>
           <input type="text" name="email" ngModel #emailModel="ngModel" matInput placeholder="email@gmail.com" required>
-
           @if (email.invalid) {
           <mat-error>שדה חובה</mat-error>}
-          <!-- <mat-error *ngIf="email.invalid">שדה חובה</mat-error> -->
-
-
         </mat-form-field>
-
       </div>
-
       <div class="example-container">
         <mat-form-field>
           <mat-label>הקש סיסמה</mat-label>
           <input type="password" name="password" ngModel #passwordModel="ngModel" matInput
             [type]="hide ? 'password' : 'text'" required>
-
           <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
             [attr.aria-pressed]="hide">
             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
           </button>
           <mat-error *ngIf="passwordModel.errors">שדה חובה</mat-error>
         </mat-form-field>
-
       </div>
     </mat-card-content>
     <p class="error-message">{{errorMessage}}</p>

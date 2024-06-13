@@ -1,13 +1,68 @@
-.allRecipes{
+// .allRecipes {
+//     display: flex;
+//     flex-direction: row;
+
+// }
+
+// .singleRec {
+//     margin-left: 5%;
+// }
+
+// .custom-paginator .mat-paginator-page-size {
+//     display: none;
+// }
+
+// ::ng-deep .custom-paginator .mat-paginator-page-size {
+//     display: none;
+// }
+
+// .filters {
+//     display: flex;
+//     flex-direction: row;
+//     direction: rtl;
+// }
+
+// .timeFilter {
+//     padding-right: 3%;
+// }
+
+// .levelFilter {
+//     padding-right: 3%;
+
+// }
+
+// .categoryFilter {
+//     padding-right: 3%;
+
+// }
+
+// .cancleFilter {
+//     margin-right: 3%;
+
+// }
+.filters {
     display: flex;
-    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 20px;
 }
-.singleRec{
-    margin-left: 5%;
+
+.allRecipes {
+    margin-top: 20px;
 }
-.custom-paginator .mat-paginator-page-size {
-    display: none;
+
+mat-grid-tile {
+    padding: 10px;
 }
-::ng-deep .custom-paginator .mat-paginator-page-size {
-    display: none;
+
+mat-form-field {
+    width: 100%;
+}
+
+button.cancleFilter {
+    margin-top: 10px;
+}
+
+h3 {
+    text-align: center;
+    color: #ff0000;
 }

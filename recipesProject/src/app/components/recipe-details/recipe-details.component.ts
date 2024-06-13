@@ -5,8 +5,9 @@ import { Recipe } from '../../shared/models/recipe';
 import { MatButtonModule } from '@angular/material/button';
 import { NgFor, CommonModule, DatePipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { LevelDirectiveDirective } from '../../shared/directives/level-directive.directive';
+import { StarLevelDirective } from '../../shared/directives/star-level.directive';
 import { TimeFormatPipePipe } from '../../shared/pipes/time-format-pipe.pipe';
+import { UserService } from '../../shared/services/user.service';
 
 @Component({
   selector: 'app-recipe-details',
@@ -16,7 +17,7 @@ import { TimeFormatPipePipe } from '../../shared/pipes/time-format-pipe.pipe';
     MatButtonModule,
     NgFor,
     MatIconModule,
-    LevelDirectiveDirective,
+    StarLevelDirective,
     TimeFormatPipePipe,
     DatePipe
   ],
@@ -27,25 +28,38 @@ export class RecipeDetailsComponent implements OnInit {
   recipeId: string | null;
   recipe: Recipe = {};
   private router = inject(Router);
-  private recipesService = inject(RecipeService);
-
+  private recipeService = inject(RecipeService);
+  private userService = inject(UserService);
+  userId: string = '';
+  sameUser: boolean = false;
   constructor(private route: ActivatedRoute) {
     this.recipeId = this.route.snapshot.paramMap.get('id');
   }
 
   ngOnInit(): void {
+    this.userService.getUser().subscribe((data) => {
+      this.userId = data._id as any;
+      console.log("id user", this.userId);
+
+    })
+
     if (this.recipeId) {
-      this.recipesService.getRecipeById(this.recipeId).subscribe((data) => {
+      this.recipeService.getRecipeById(this.recipeId).subscribe((data) => {
         this.recipe = data as Recipe;
+        console.log("rec", this.recipe);
+        if (this.recipe.user?.id == this.userId) {
+          this.sameUser = true;
+        }
       });
     } else {
       console.error('Recipe ID is null or undefined');
     }
+
   }
 
   deleteRecipe() {
     if (this.recipeId) {
-      this.recipesService.deleteRecipe(this.recipeId).subscribe({
+      this.recipeService.deleteRecipe(this.recipeId).subscribe({
         next: (x) => {
           this.router.navigate(['/allRecipes']);
         },

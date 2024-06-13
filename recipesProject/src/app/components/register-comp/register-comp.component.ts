@@ -53,8 +53,8 @@ export class RegisterCompComponent implements OnInit {
       this.password = state.password;
     }
 
-    console.log("kk",this.email1,this.password);
-    
+    console.log("kk", this.email1, this.password);
+
     merge(this.email.statusChanges, this.email.valueChanges)
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateErrorMessage());
@@ -77,6 +77,7 @@ export class RegisterCompComponent implements OnInit {
 
 
   signUp(form: NgForm) {
+    this.errorMessage = ''
     console.log("details", form.value.address.address, form.value.userName.userName, form.value.email.email, form.value.password);
     this.userService
       .signUp({
@@ -90,6 +91,7 @@ export class RegisterCompComponent implements OnInit {
         next: (x) => {
           console.log('signup', x);
           this.userService.token = x.token;
+          window.location.reload();
           this.router.navigate(['/allRecipes']);
         },
         error: (err) => {

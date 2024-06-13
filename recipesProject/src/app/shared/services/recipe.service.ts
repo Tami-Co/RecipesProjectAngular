@@ -7,8 +7,6 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class RecipeService {
-
-
   private http = inject(HttpClient);
   private baseUrl = `${environment.apiURL}/recipes`
 
@@ -31,8 +29,16 @@ export class RecipeService {
     return this.http.get<Recipe>(`${this.baseUrl}/${id}`);
   }
 
-  getRecipesOfUser(id: number) {
-    return this.http.get<Recipe[]>(`${this.baseUrl}/recipesUser/${id}`);
+  getRecipesOfUser(id: string) {
+    console.log("getRecipesOfUser");
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${this.token}`
+      })
+    };
+
+    return this.http.get<Recipe[]>(`${this.baseUrl}/recipesUser/${id}`,httpOptions);
   }
 
   getRecipesByTime(time: number) {
@@ -48,11 +54,11 @@ export class RecipeService {
 
     return this.http.post<Recipe>(`${this.baseUrl}`, r, httpOptions);
   }
-
   //לבדוק אם טוב ככה לשרשר את הID
   updateRecipe(r: Recipe) {
     return this.http.put<Recipe>(`${this.baseUrl}/${r._id}`, r);
   }
+  
   deleteRecipe(id: string) {
     const httpOptions = {
       headers: new HttpHeaders({

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { LoginCompComponent } from './components/login-comp/login-comp.component';
 import { AllRecipesComponent } from './components/all-recipes/all-recipes.component';
@@ -7,26 +7,40 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { RegisterCompComponent } from './components/register-comp/register-comp.component';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
 import { NgIf } from '@angular/common';
+import { User } from './shared/models/user';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,NgIf,RegisterCompComponent,MatTabsModule, LoginCompComponent, HttpClientModule, RouterModule, FormsModule,MatButtonModule,AllRecipesComponent],
+  imports: [MatIconModule,RouterOutlet, NgIf, RegisterCompComponent, MatTabsModule, LoginCompComponent, HttpClientModule, RouterModule, FormsModule, MatButtonModule, AllRecipesComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'recipesProject';
-  userService=inject(UserService)
+  userService = inject(UserService)
+  user: User ={};
   constructor(private router: Router) {
-    
+
+  }
+  ngOnInit(): void {
+    if (this.userService.token) {
+      console.log("oninit");
+      
+      this.userService.getUser().subscribe((data) => {
+        this.user = data as User;
+        console.log( this.user.userName);
+
+      })
+    }
   }
   onTabChange(event: any) {
     const index = event.tab.textLabel;
-    console.log("index",index);
-    
+    console.log("index", index);
+
     switch (index) {
       case 'המתכונים שלנו':
         this.router.navigate(['/allRecipes']);
@@ -48,15 +62,17 @@ export class AppComponent {
         break;
       default:
         this.router.navigate(['/']);
-    
+
     }
   }
   logout() {
-    // this.userService.logout();
+    this.userService.token = 'logOut';
     this.router.navigate(['/login']);
+    window.location.reload();
+
   }
 
-  
+
 
 }
 
