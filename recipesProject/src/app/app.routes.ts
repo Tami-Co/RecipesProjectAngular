@@ -11,6 +11,7 @@ export const routes: Routes = [
     { path: 'signUp', component: RegisterCompComponent },
     { path: 'allRecipes', component: AllRecipesComponent },
     { path: 'addRecipe', component: RecipeFormComponent },
+    { path: 'updateRecipe', component: RecipeFormComponent },
     { path: 'recipe-details/:id', component: RecipeDetailsComponent },
     { path: 'myRecipes', component: UserRecipesComponent },
     { path: '', component: AllRecipesComponent }

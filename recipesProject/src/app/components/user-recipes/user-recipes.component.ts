@@ -12,10 +12,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { UserService } from '../../shared/services/user.service';
 import { User } from '../../shared/models/user';
+import { ShowRecipesComponent } from '../show-recipes/show-recipes.component';
 @Component({
   selector: 'app-user-recipes',
   standalone: true,
-  imports: [MatGridListModule, MatPaginatorModule, NgIf, OneRecipeComponent, MatFormFieldModule, MatSelectModule, MatInputModule, FormsModule, MatButtonModule, MatPaginatorModule, NgFor],
+  imports: [MatGridListModule, MatPaginatorModule, NgIf, OneRecipeComponent, MatFormFieldModule, MatSelectModule, MatInputModule, FormsModule, MatButtonModule, MatPaginatorModule, NgFor,ShowRecipesComponent],
   templateUrl: './user-recipes.component.html',
   styleUrl: './user-recipes.component.scss'
 })
@@ -24,21 +25,25 @@ export class UserRecipesComponent implements OnInit {
   private userService = inject(UserService);
   user: User = {};
   listRecipes: any[] = [];
-
+  isFinished: boolean = false;
   async ngOnInit(): Promise<void> {
-    await this.userService.getUser().subscribe((data) => {
+    this.userService.getUser().subscribe((data) => {
       this.user = data as User;
-      console.log("id", this.user);
+      console.log("id", this.user._id);
 
-    })
-    if (this.user._id) {
-      console.log("enter");
+      if (this.user._id !== undefined) {
+        console.log("enter");
 
-      await this.recipesService.getRecipesOfUser(this.user._id).subscribe((data) => {
-        this.listRecipes = data as any[];
-        console.log("bb", this.listRecipes);
-      });
-    }
+        this.recipesService.getRecipesOfUser(this.user._id).subscribe((data) => {
+          this.listRecipes = data as any[];
+          this.isFinished = true;
+          console.log("bb", this.listRecipes);
+        });
+      }
+      else {
+        this.isFinished = true;
+      }
+    });
   }
 }
 

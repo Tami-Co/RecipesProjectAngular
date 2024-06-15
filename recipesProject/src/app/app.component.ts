@@ -15,25 +15,24 @@ import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [MatIconModule,RouterOutlet, NgIf, RegisterCompComponent, MatTabsModule, LoginCompComponent, HttpClientModule, RouterModule, FormsModule, MatButtonModule, AllRecipesComponent],
+  imports: [MatIconModule, RouterOutlet, NgIf, RegisterCompComponent, MatTabsModule, LoginCompComponent, HttpClientModule, RouterModule, FormsModule, MatButtonModule, AllRecipesComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
   title = 'recipesProject';
   userService = inject(UserService)
-  user: User ={};
+  user: User = {};
   constructor(private router: Router) {
 
   }
   ngOnInit(): void {
     if (this.userService.token) {
       console.log("oninit");
-      
+
       this.userService.getUser().subscribe((data) => {
         this.user = data as User;
-        console.log( this.user.userName);
-
+        console.log(this.user.userName);
       })
     }
   }

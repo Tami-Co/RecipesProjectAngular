@@ -1,4 +1,4 @@
-<div class="filters">
+<!-- <div class="filters">
     <div class="categoryFilter">
         <mat-form-field>
             <mat-label>סינון לפי קטגוריה</mat-label>
@@ -57,8 +57,18 @@
 </div>
 <mat-paginator (page)="onPageChange($event)" class="custom-paginator" [length]="100" [pageSize]="12"
     aria-label="Select page">
-</mat-paginator>
-<!-- <div class="filters">
+</mat-paginator> -->
+
+
+
+
+
+
+
+
+
+
+ <!-- <div class="filters">
     <div class="categoryFilter">
       <mat-form-field>
         <mat-label>סינון לפי קטגוריה</mat-label>
@@ -102,5 +112,44 @@
       </mat-grid-tile>
     </mat-grid-list>
   </div>
-  <mat-paginator (page)="onPageChange($event)" class="custom-paginator" [length]="100" [pageSize]="12" aria-label="Select page"></mat-paginator>
-   -->
+  <mat-paginator (page)="onPageChange($event)" class="custom-paginator" [length]="100" [pageSize]="12" aria-label="Select page"></mat-paginator> -->
+
+
+
+
+  <div class="filters">
+    <div class="categoryFilter">
+      <mat-form-field>
+        <mat-label>סינון לפי קטגוריה</mat-label>
+        <mat-select (selectionChange)="onCategoryChange($event.value)">
+          <mat-option [value]="null">ללא</mat-option>
+          <mat-option *ngFor="let c of listCategories" [value]="c.description">{{c.description}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="levelFilter">
+      <mat-form-field>
+        <mat-label>סינון לפי רמת קושי</mat-label>
+        <mat-select (selectionChange)="onLevelChange($event.value)">
+          <mat-option [value]="null">ללא</mat-option>
+          <mat-option *ngFor="let l of [1, 2, 3, 4, 5]" [value]="l">{{l}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="timeFilter">
+      <mat-form-field>
+        <mat-label>סינון לפי זמן הכנה</mat-label>
+        <mat-select (selectionChange)="onTimeChange($event.value)">
+          <mat-option [value]="null">ללא</mat-option>
+          <mat-option [value]="15">15 דקות</mat-option>
+          <mat-option [value]="30">30 דקות</mat-option>
+          <mat-option [value]="60">1 שעה</mat-option>
+          <mat-option [value]="90">1.5 שעות</mat-option>
+          <mat-option [value]="120">2 שעות</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <button class="cancleFilter" (click)="resetFilters()" mat-flat-button color="primary">בטל סינונים</button>
+  </div>
+  <app-show-recipes [fromComp]="'allRecipes'" [recipes]="listRecipes"></app-show-recipes>
+  <mat-paginator (page)="onPageChange($event)" class="custom-paginator" [length]="100" [pageSize]="12" aria-label="Select page"></mat-paginator> -->

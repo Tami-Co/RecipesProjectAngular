@@ -1,11 +1,11 @@
 <div class="myForm">
     <form [formGroup]="recipeForm" (ngSubmit)="addRecipe()">
-        <h2 class="title">שיתוף מתכון</h2>
+        <h2 class="title"  *ngIf="isFinished"> {{ recipeToUpdate.name==undefined  ? 'שיתוף מתכון' : 'עדכון מתכון' }}</h2>
 
         <div>
             <mat-form-field>
                 <mat-label>שם מתכון</mat-label>
-                <input matInput type="text" formControlName="name">
+                <input [(ngModel)]="recipeToUpdate.name" matInput type="text" formControlName="name">
                 <mat-error *ngIf="recipeForm.controls['name'].hasError('required')">שדה חובה</mat-error>
                 <mat-error *ngIf="recipeForm.controls['name'].hasError('minlength')">שם מכיל מינימום 2 תווים</mat-error>
                 <mat-error *ngIf="recipeForm.controls['name'].hasError('maxlength') ">שם מכיל מקסימום 50
@@ -16,7 +16,7 @@
         <div>
             <mat-form-field>
                 <mat-label>תיאור </mat-label>
-                <textarea matInput type="text" formControlName="description"></textarea>
+                <textarea [(ngModel)]="recipeToUpdate.description" matInput type="text" formControlName="description"></textarea>
                 <mat-error *ngIf="recipeForm.controls['description'].hasError('required')">שדה חובה</mat-error>
                 <mat-error *ngIf="recipeForm.controls['description'].hasError('minlength')">תיאור מכיל מינימום 2
                     תווים</mat-error>
@@ -32,7 +32,7 @@
                 <mat-label>בחירת קטגוריה</mat-label>
                 <mat-select formControlName="category" multiple>
                     @for (c of listCategories; track c) {
-                    <mat-option [value]="c.description">{{c.description}}</mat-option>
+                    <mat-option  [value]="c.description">{{c.description}}</mat-option>
                     }
                 </mat-select>
             </mat-form-field>
@@ -55,7 +55,7 @@
         <div>
             <mat-form-field floatLabel="always">
                 <mat-label>משך זמן הכנה</mat-label>
-                <input matInput formControlName="preparationTime" type="number" class="example-right-align"
+                <input [(ngModel)]="recipeToUpdate.preparationTime" matInput formControlName="preparationTime" type="number" class="example-right-align"
                     placeholder="0">
                 <!-- <span matTextPrefix>$&nbsp;</span> -->
                 <mat-error *ngIf="recipeForm.controls['preparationTime'].hasError('required')">שדה חובה</mat-error>
@@ -105,7 +105,7 @@
         <div>
             <mat-form-field>
                 <mat-label>הוראות הכנה </mat-label>
-                <textarea matInput type="text" formControlName="instructions"></textarea>
+                <textarea [(ngModel)]="recipeToUpdate.instructions" matInput type="text" formControlName="instructions"></textarea>
                 <mat-error *ngIf="recipeForm.controls['instructions'].hasError('required')">שדה חובה</mat-error>
                 <mat-error *ngIf="recipeForm.controls['instructions'].hasError('minlength')"> מינימום 2
                     תווים</mat-error>
@@ -118,19 +118,19 @@
         <div>
             <mat-form-field>
                 <mat-label>הכנס קישור לתמונה</mat-label>
-                <input type="text" matInput formControlName="img">
+                <input [(ngModel)]="recipeToUpdate.img" type="text" matInput formControlName="img">
             </mat-form-field>
         </div>
         <div>
-            <mat-checkbox formControlName="isPrivate" class="example-margin">האם המתכון פרטי?</mat-checkbox>
+            <mat-checkbox checked="recipeToUpdate.isPrivate" formControlName="isPrivate" class="example-margin">האם המתכון פרטי?</mat-checkbox>
             <mat-error
                 *ngIf="recipeForm.controls['isPrivate'].hasError('required') && recipeForm.controls['isPrivate'].touched">שדה
                 חובה</mat-error>
 
         </div>
 
-        <div class="example-button-row">
-            <button [disabled]="recipeForm.invalid" mat-flat-button color="primary">הוספה</button>
+        <div class="example-button-row" *ngIf="isFinished">
+            <button [disabled]="recipeForm.invalid" mat-flat-button color="primary">{{ recipeToUpdate.name==undefined ? 'הוספה' : 'עדכון'}}</button>
         </div>
 
     </form>

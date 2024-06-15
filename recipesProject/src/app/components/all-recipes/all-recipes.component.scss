@@ -43,23 +43,23 @@
 .filters {
     display: flex;
     justify-content: space-around;
-    margin-bottom: 20px;
+    // margin-bottom: 20px;
 }
 
-.allRecipes {
-    margin-top: 20px;
-}
+// .allRecipes {
+//     margin-top: 20px;
+// }
 
-mat-grid-tile {
-    padding: 10px;
-}
+// mat-grid-tile {
+//     padding: 10px;
+// }
 
 mat-form-field {
     width: 100%;
 }
 
 button.cancleFilter {
-    margin-top: 10px;
+    margin-top: 2%;
 }
 
 h3 {

@@ -1,7 +1,7 @@
 // .example-card {
 //     max-width: 400px;
 //   }
-  
+
 //   .example-header-image {
 //     background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
 //     background-size: cover;
@@ -12,7 +12,7 @@
 //   }
 .recipe-card {
   max-width: 400px;
-  margin: 20px;
+  // padding-bottom: 3%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s;
 
@@ -35,7 +35,7 @@
   }
 
   mat-card-content {
-    padding: 10px;
+    // padding: 3%;
     font-size: 1em;
   }
 }

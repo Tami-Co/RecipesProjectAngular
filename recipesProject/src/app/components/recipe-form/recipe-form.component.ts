@@ -10,7 +10,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { RecipeService } from '../../shared/services/recipe.service';
 import { routes } from '../../app.routes';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { NgFor, NgIf } from '@angular/common';
@@ -18,6 +18,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 import { Category } from '../../shared/models/category';
+import { Recipe } from '../../shared/models/recipe';
 
 @Component({
   selector: 'app-recipe-form',
@@ -34,9 +35,23 @@ export class RecipeFormComponent implements OnInit {
   listCategories: any[] = [];
   categoy2: any[] = [];
   hasCategory: boolean = false;
+  recipeToUpdate: Recipe = {};
   private snackBar = inject(MatSnackBar);
+  isFinished: boolean = false;
+  constructor(private fb: FormBuilder, private route: ActivatedRoute) {
+    const navigation = this.router.getCurrentNavigation();
+    const state = navigation?.extras.state as { recipe: Recipe };
 
-  constructor(private fb: FormBuilder,) {
+    if (state) {
+      this.recipeToUpdate = state.recipe;
+      this.isFinished = true;
+      console.log("recipeToUpdate", this.recipeToUpdate);
+    }
+    else {
+      console.log("else", this.recipeToUpdate);
+
+      this.isFinished = true;
+    }
     this.recipeForm = fb.group({
       name: fb.control('', [Validators.required, Validators.minLength(2), Validators.maxLength(50), Validators.pattern("^[a-zA-Zא-ת\\s]+$")]),
       description: fb.control('', [Validators.required, Validators.minLength(2), Validators.maxLength(200), Validators.pattern("^[a-zA-Zא-ת\\s]+$")]),
