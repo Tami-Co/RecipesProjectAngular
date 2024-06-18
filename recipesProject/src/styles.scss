@@ -1,4 +1,110 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@400;700&display=swap');
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* Import the font from Google Fonts */
+
+/* Apply the font to the entire body */
+
+/* הגדרת הגופן הכללי של האתר */
+body {
+    font-family: 'Assistant', sans-serif;
+    direction: rtl;
+    
+    
+}
+
+/* Angular Material - Form Fields and Inputs */
+.mat-form-field {
+    font-family: 'Assistant', sans-serif;
+}
+
+.mat-input-element {
+    font-family: 'Assistant', sans-serif;
+}
+
+/* Angular Material - Select Dropdowns */
+.mat-select-value-text {
+    font-family: 'Assistant', sans-serif;
+}
+
+/* Angular Material - Buttons */
+.mat-button, .mat-raised-button, .mat-stroked-button, .mat-icon-button {
+    font-family: 'Assistant', sans-serif;
+}
+
+/* Angular Material - Checkboxes and Radio Buttons */
+.mat-checkbox-label {
+    font-family: 'Assistant', sans-serif;
+}
+
+.mat-radio-label {
+    font-family: 'Assistant', sans-serif;
+}
+
+/* Angular Material - Sliders and Toggles */
+.mat-slider-thumb {
+    font-family: 'Assistant', sans-serif;
+}
+
+.mat-slide-toggle-bar {
+    font-family: 'Assistant', sans-serif;
+}
+
+/* Angular Material - Menus and Tooltips */
+.mat-menu-panel {
+    font-family: 'Assistant', sans-serif;
+}
+
+.mat-tooltip {
+    font-family: 'Assistant', sans-serif;
+}
+
+/* Angular Material - Cards and Lists */
+.mat-card-title {
+    font-family: 'Assistant', sans-serif;
+}
+
+.mat-card-content {
+    font-family: 'Assistant', sans-serif;
+}
+
+.mat-list-item {
+    font-family: 'Assistant', sans-serif;
+}
+
+/* Angular Material - Tabs and Toolbar */
+.mat-tab-label {
+    font-family: 'Assistant', sans-serif;
+}
+
+.mat-toolbar {
+    font-family: 'Assistant', sans-serif;
+}
+
+/* Angular Material - Dialog and Drawer */
+.mat-dialog-container {
+    font-family: 'Assistant', sans-serif;
+}
+
+.mat-drawer-content {
+    font-family: 'Assistant', sans-serif;
+}
+
+/* Angular Material - Progress Indicators */
+.mat-progress-bar {
+    font-family: 'Assistant', sans-serif;
+}
+
+.mat-spinner-circle {
+    font-family: 'Assistant', sans-serif;
+}
+
+/* Angular Material - Autocomplete and Chips */
+.mat-autocomplete-panel {
+    font-family: 'Assistant', sans-serif;
+}
+
+.mat-chip-list {
+    font-family: 'Assistant', sans-serif;
+}

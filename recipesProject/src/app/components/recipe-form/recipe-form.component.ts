@@ -13,7 +13,7 @@ import { routes } from '../../app.routes';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
-import { NgFor, NgIf } from '@angular/common';
+import { NgFor, NgForOf, NgIf } from '@angular/common';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 
@@ -36,6 +36,7 @@ export class RecipeFormComponent implements OnInit {
   categoy2: any[] = [];
   hasCategory: boolean = false;
   recipeToUpdate: Recipe = {};
+  update: boolean = false;
   private snackBar = inject(MatSnackBar);
   isFinished: boolean = false;
   constructor(private fb: FormBuilder, private route: ActivatedRoute) {
@@ -45,6 +46,7 @@ export class RecipeFormComponent implements OnInit {
     if (state) {
       this.recipeToUpdate = state.recipe;
       this.isFinished = true;
+      this.update = true;
       console.log("recipeToUpdate", this.recipeToUpdate);
     }
     else {
@@ -59,23 +61,18 @@ export class RecipeFormComponent implements OnInit {
       newCategory: fb.control('', [Validators.minLength(2), Validators.maxLength(50), Validators.pattern("^[a-zA-Zא-ת\\s]+$")]),
       preparationTime: fb.control(0, [Validators.required, Validators.maxLength(3)]),
       level: fb.control('', Validators.required),
-      // layersCake: fb.array([
-      //   fb.group({
-      //     description: fb.control('', [Validators.required, Validators.minLength(2), Validators.maxLength(70), Validators.pattern("^[a-zA-Zא-ת\\s]+$")]),
-      //     ingredients: fb.array([
-      //       fb.control('', Validators.required),]),
-      //   }),
-      // ]),
       layersCake: fb.array([]),
       instructions: fb.control('', [Validators.required, Validators.minLength(2), Validators.maxLength(10000)]),
       // לבדוק אם חובה!!!!!!!!!!!!!!!!!!!
       img: fb.control(''),
       isPrivate: fb.control(false, Validators.required),
 
+
     })
     this.addLayer();
   }
   get layersCake(): FormArray {
+
     return this.recipeForm.controls['layersCake'] as FormArray;
   }
 
@@ -87,11 +84,37 @@ export class RecipeFormComponent implements OnInit {
     this.categoryService.getCategories().subscribe((data) => {
       this.listCategories = data as any[];
     })
-
+    if (this.recipeToUpdate) {
+      this.populateForm(this.recipeToUpdate);
+      console.log("vvv",this.recipeForm.value);
+      
+    }
   }
 
+  populateForm(recipe: Recipe) {
+    this.recipeForm.patchValue({
+      name: recipe.name,
+      description: recipe.description,
+      category: recipe.categories?.map(c => c.description),
+      preparationTime: recipe.preparationTime,
+      level: recipe.level,
+      instructions: recipe.instructions,
+      img: recipe.img,
+      isPrivate: recipe.isPrivate
+    });
 
+    // Populate layersCake form array
+    const layersArray = this.recipeForm.get('layersCake') as FormArray;
+    recipe.layersCake?.forEach(layer => {
+      layersArray.push(this.fb.group({
+        description: [layer.description, Validators.required],
+        ingredients: this.fb.array(layer.ingredients.map(ingredient => this.fb.control(ingredient, Validators.required)))
+      }));
+    });
+  }
   addLayer() {
+
+    console.log("1", this.recipeToUpdate);
 
     console.log("addLayer");
     this.layersCake.push(
@@ -109,6 +132,7 @@ export class RecipeFormComponent implements OnInit {
     }
   }
   addRecipe() {
+    console.log("addRecipe");
 
     if (this.recipeForm.value.newCategory && this.recipeForm.value.category) {
       this.recipeForm.value.category.push(this.recipeForm.value.newCategory)
@@ -169,5 +193,141 @@ export class RecipeFormComponent implements OnInit {
       duration: 10000,
     });
   }
+  // updateRecipe() {
+  //   console.log("updateRecipe");
+  //   if (this.recipeForm.value.newCategory && this.recipeForm.value.category) {
+  //     this.recipeForm.value.category.push(this.recipeForm.value.newCategory)
+  //   }
+  //   else {
+  //     if (!this.recipeForm.value.category) {
+  //       this.recipeForm.value.category = [this.recipeForm.value.newCategory]
+  //     }
+
+  //   }
+  //   // this.recipeForm.value.layersCake.forEach((layer: any) => {
+  //   //   const ingredients = layer.ingredients;
+  //   //   for (let i = ingredients.length - 1; i >= 0; i--) {
+  //   //     if (ingredients[i] === '') {
+  //   //       ingredients.splice(i, 1);
+  //   //     }
+  //   //   }
+  //   // });
+  //   this.recipeForm.value.category.forEach((item: any) => {
+  //     let obj = { "description": item };
+  //     this.categoy2.push(obj);
+  //   });
+  //   this.recipeForm.value.category = this.categoy2;
+  //   console.log("rec", this.recipeForm.value);
+
+  
+  //   if (this.recipeToUpdate && this.recipeToUpdate._id) {
+  //     this.recipeService
+  //       .updateRecipe({
+  //         name: this.recipeForm.value.name,
+  //         description: this.recipeForm.value.description,
+  //         categories: this.recipeForm.value.category,
+  //         preparationTime: this.recipeForm.value.preparationTime,
+  //         level: this.recipeForm.value.level,
+  //         dateAdded: new Date(),
+  //         layersCake: this.recipeForm.value.layersCake,
+  //         instructions: this.recipeForm.value.instructions,
+  //         img: this.recipeForm.value.img,
+  //         isPrivate: this.recipeForm.value.isPrivate,
+  //       }, this.recipeToUpdate._id)
+  //       .subscribe({
+  //         next: (x) => {
+  //           console.log('addRec', x);
+  
+  //           setTimeout(() => {
+  //             this.openSnackBar('!המתכון התעדכן בהצלחה', 'סגור');
+  //             this.router.navigate(['/allRecipes']);
+  //           }, 3000);
+  //         },
+  //         error: (err) => {
+  //           console.error('add recipe  error', err);
+  //           this.openSnackBar('שגיאה', 'סגור');
+  //         }
+  //       });
+  //   } else {
+  //     console.error('Recipe ID is undefined');
+  //     this.openSnackBar('שגיאה: מזהה המתכון אינו מוגדר', 'סגור');
+  //   }
+  // }
+
+  updateRecipe() {
+    console.log("updateRecipe");
+
+    // מחיקת השכבה הראשונה אם היא ריקה
+    if (this.recipeForm.value.layersCake.length > 0) {
+        const firstLayer = this.recipeForm.value.layersCake[0];
+        const isFirstLayerEmpty = !firstLayer.description && firstLayer.ingredients.every((ingredient: string) => ingredient === '');
+        if (isFirstLayerEmpty) {
+            this.recipeForm.value.layersCake.splice(0, 1);
+        }
+    }
+
+    if (this.recipeForm.value.newCategory && this.recipeForm.value.category) {
+        this.recipeForm.value.category.push(this.recipeForm.value.newCategory);
+    } else {
+        if (!this.recipeForm.value.category) {
+            this.recipeForm.value.category = [this.recipeForm.value.newCategory];
+        }
+    }
+
+    this.recipeForm.value.layersCake.forEach((layer: any) => {
+        const ingredients = layer.ingredients;
+        for (let i = ingredients.length - 1; i >= 0; i--) {
+            if (ingredients[i] === '') {
+                ingredients.splice(i, 1);
+            }
+        }
+    });
+
+    this.recipeForm.value.category.forEach((item: any) => {
+        let obj = { "description": item };
+        this.categoy2.push(obj);
+    });
+    this.recipeForm.value.category = this.categoy2;
+    console.log("rec", this.recipeForm.value);
+
+    if (this.recipeToUpdate && this.recipeToUpdate._id) {
+        this.recipeService.updateRecipe({
+            name: this.recipeForm.value.name,
+            description: this.recipeForm.value.description,
+            categories: this.recipeForm.value.category,
+            preparationTime: this.recipeForm.value.preparationTime,
+            level: this.recipeForm.value.level,
+            dateAdded: new Date(),
+            layersCake: this.recipeForm.value.layersCake,
+            instructions: this.recipeForm.value.instructions,
+            img: this.recipeForm.value.img,
+            isPrivate: this.recipeForm.value.isPrivate,
+        }, this.recipeToUpdate._id).subscribe({
+            next: (x) => {
+                console.log('addRec', x);
+
+                setTimeout(() => {
+                    this.openSnackBar('!המתכון התעדכן בהצלחה', 'סגור');
+                    this.router.navigate(['/myRecipes']);
+                }, 3000);
+            },
+            error: (err) => {
+                console.error('add recipe error', err);
+                this.openSnackBar('שגיאה', 'סגור');
+            }
+        });
+    } else {
+        console.error('Recipe ID is undefined');
+        this.openSnackBar('שגיאה: מזהה המתכון אינו מוגדר', 'סגור');
+    }
 }
+
+  
+  
+  
+}
+
+
+
+
 

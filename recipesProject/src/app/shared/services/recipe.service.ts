@@ -55,8 +55,13 @@ export class RecipeService {
     return this.http.post<Recipe>(`${this.baseUrl}`, r, httpOptions);
   }
   //לבדוק אם טוב ככה לשרשר את הID
-  updateRecipe(r: Recipe) {
-    return this.http.put<Recipe>(`${this.baseUrl}/${r._id}`, r);
+  updateRecipe(r: Recipe,id:string) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${this.token}`
+      })
+    };
+    return this.http.put<Recipe>(`${this.baseUrl}/${id}`, r,httpOptions);
   }
   
   deleteRecipe(id: string) {
@@ -66,5 +71,11 @@ export class RecipeService {
       })
     };
     return this.http.delete(`${this.baseUrl}/${id}`, httpOptions);
+  }
+  delete_Recipe(id:number){
+    console.log(id);
+    return this.http.delete(`http://localhost:500/recipe/delete/6661eb2bf70e7d6c7e21d81a`);
+    // let recipe= this.http.delete<Recipe>(`${this.recipeURL}/delete/${id}`);    
+    // return recipe
   }
 }

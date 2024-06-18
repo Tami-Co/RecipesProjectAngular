@@ -1,19 +1,33 @@
-
-.navBar{
+.navBar {
     direction: rtl;
     padding-top: 2%;
+    font-family: 'Assistant';
+   
+}
+.mat-mdc-tab{
+        font-family: 'Assistant';
+
 }
 .mat-tab-group {
     margin-bottom: 48px;
-  }
-  body {
+}
+
+body {
     direction: rtl;
     text-align: right;
+    font-family: Assistant;
+
 }
-.user{
+
+.user {
     display: flex;
     flex-direction: row;
     align-items: center;
     padding-left: 4%;
 
+}
+
+@font-face {
+    font-family: Assistant;
+    src: url(../assets/fonts/Assistant/Assistant-VariableFont_wght.ttf) format('woff2'),
 }
