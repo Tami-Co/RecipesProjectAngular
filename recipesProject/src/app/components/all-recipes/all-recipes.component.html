@@ -1,128 +1,8 @@
-<!-- <div class="filters">
-    <div class="categoryFilter">
-        <mat-form-field>
-            <mat-label>סינון לפי קטגוריה</mat-label>
-            <mat-select>
-                <mat-option>ללא </mat-option>
-                @for (c of listCategories; track c) {
-                <mat-option [value]="c.description"
-                    (click)="filterByCategory(c.description)">{{c.description}}</mat-option>
-                }
-            </mat-select>
-        </mat-form-field>
-    </div>
-    <div class="levelFilter">
-        <mat-form-field>
-            <mat-label>סינון לפי רמת קושי</mat-label>
-            <mat-select>
-             
-                <mat-option>ללא </mat-option>
-                <mat-option (click)="filterByLevel(1)" [value]="1">{{1}}</mat-option>
-                <mat-option (click)="filterByLevel(2)" [value]="2">{{2}}</mat-option>
-                <mat-option (click)="filterByLevel(3)" [value]="3">{{3}}</mat-option>
-                <mat-option (click)="filterByLevel(4)" [value]="4">{{4}}</mat-option>
-                <mat-option (click)="filterByLevel(5)" [value]="5">{{5}}</mat-option>
-
-            </mat-select>
-        </mat-form-field>
-    </div>
-    <div class="timeFilter">
-        <mat-form-field>
-            <mat-label>סינון לפי זמן הכנה</mat-label>
-            <mat-select>
-            
-                <mat-option> ללא</mat-option>
-                <mat-option (click)="filterByTime(15)">דקות 15</mat-option>
-                <mat-option (click)="filterByTime(30)">30 דקות</mat-option>
-                <mat-option (click)="filterByTime(60)">1 שעה</mat-option>
-                <mat-option (click)="filterByTime(90)">1.5 שעות</mat-option>
-                <mat-option (click)="filterByTime(120)">2 שעות</mat-option>
-
-            </mat-select>
-        </mat-form-field>
-    </div>
-    <button class="cancleFilter" (click)="cancleFilter()" mat-flat-button color="primary">בטל סינונים</button>
-
-</div>
-<div>
-    <h3 *ngIf="flag">אין לנו עוד מה להציג</h3>
-</div>
-<div class="allRecipes">
-    @for(recipe of listRecipes; track recipe._id){
-    <div class="singleRec">
-        <app-one-recipe [oneItem]="recipe"></app-one-recipe>
-
-    </div>
-    }
-</div>
-<mat-paginator (page)="onPageChange($event)" class="custom-paginator" [length]="100" [pageSize]="12"
-    aria-label="Select page">
-</mat-paginator> -->
-
-
-
-
-
-
-
-
-
-
-<!-- <div class="filters">
-    <div class="categoryFilter">
-      <mat-form-field>
-        <mat-label>סינון לפי קטגוריה</mat-label>
-        <mat-select (selectionChange)="onCategoryChange($event.value)">
-          <mat-option [value]="null">ללא</mat-option>
-          <mat-option *ngFor="let c of listCategories" [value]="c.description">{{c.description}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div class="levelFilter">
-      <mat-form-field>
-        <mat-label>סינון לפי רמת קושי</mat-label>
-        <mat-select (selectionChange)="onLevelChange($event.value)">
-          <mat-option [value]="null">ללא</mat-option>
-          <mat-option *ngFor="let l of [1, 2, 3, 4, 5]" [value]="l">{{l}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div class="timeFilter">
-      <mat-form-field>
-        <mat-label>סינון לפי זמן הכנה</mat-label>
-        <mat-select (selectionChange)="onTimeChange($event.value)">
-          <mat-option [value]="null">ללא</mat-option>
-          <mat-option [value]="15">15 דקות</mat-option>
-          <mat-option [value]="30">30 דקות</mat-option>
-          <mat-option [value]="60">1 שעה</mat-option>
-          <mat-option [value]="90">1.5 שעות</mat-option>
-          <mat-option [value]="120">2 שעות</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <button class="cancleFilter" (click)="resetFilters()" mat-flat-button color="primary">בטל סינונים</button>
-  </div>
-  <div>
-    <h3 *ngIf="flag">אין לנו עוד מה להציג</h3>
-  </div>
-  <div class="allRecipes">
-    <mat-grid-list cols="3" rowHeight="1:1">
-      <mat-grid-tile *ngFor="let recipe of listRecipes">
-        <app-one-recipe [oneItem]="recipe"></app-one-recipe>
-      </mat-grid-tile>
-    </mat-grid-list>
-  </div>
-  <mat-paginator (page)="onPageChange($event)" class="custom-paginator" [length]="100" [pageSize]="12" aria-label="Select page"></mat-paginator> -->
-
-
-
-
 <div class="filters">
     <div class="categoryFilter">
         <mat-form-field>
             <mat-label>סינון לפי קטגוריה</mat-label>
             <mat-select [(ngModel)]="selectedCategory" (selectionChange)="filterByCategory($event.value)">
-                <!-- <mat-option [value]="null">ללא</mat-option> -->
                 @for (c of listCategories; track c) {
                 <mat-option [value]="c.description">{{c.description}}</mat-option>
                 }
@@ -133,8 +13,7 @@
         <mat-form-field>
             <mat-label>סינון לפי רמת קושי</mat-label>
             <mat-select [(ngModel)]="selectedLevel" (selectionChange)="filterByLevel($event.value)">
-                <!-- <mat-option [value]="null">ללא</mat-option> -->
-                <mat-option  *ngFor="let l of [1, 2, 3, 4, 5]" [value]="l">{{l}}</mat-option>
+                <mat-option *ngFor="let l of [1, 2, 3, 4, 5]" [value]="l">{{l}}</mat-option>
             </mat-select>
         </mat-form-field>
     </div>
@@ -142,7 +21,6 @@
         <mat-form-field>
             <mat-label>סינון לפי זמן הכנה</mat-label>
             <mat-select [(ngModel)]="selectedTime" (selectionChange)="filterByTime($event.value)">
-                <!-- <mat-option [value]="null">ללא</mat-option> -->
                 <mat-option [value]="15">דקות 15</mat-option>
                 <mat-option [value]="30">30 דקות</mat-option>
                 <mat-option [value]="60">1 שעה</mat-option>
@@ -151,12 +29,20 @@
             </mat-select>
         </mat-form-field>
     </div>
-    <button class="cancleFilter" (click)="cancleFilter()" mat-flat-button color="primary">בטל סינונים</button>
+    <div class="cancleFilter">
+        <button  (click)="cancleFilter()" mat-flat-button color="primary">בטל סינונים</button>
+    
+    </div>
 </div>
 <div>
     <h3 *ngIf="flag">אין לנו עוד מה להציג</h3>
 </div>
+<div>
+    <h4 *ngIf="listRecipes.length==0 && without_filters==false">אין מתכונים התואמים לחיפוש שלך</h4>
+</div>
 <app-show-recipes [fromComp]="'allRecipes'" [recipes]="listRecipes"></app-show-recipes>
+
 <mat-paginator *ngIf="without_filters" (page)="onPageChange($event)" class="custom-paginator" [length]="100"
     [pageSize]="12" aria-label="Select page">
-</mat-paginator>
+</mat-paginator> 
+

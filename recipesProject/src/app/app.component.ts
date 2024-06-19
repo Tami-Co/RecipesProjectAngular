@@ -30,11 +30,26 @@ export class AppComponent implements OnInit {
     if (this.userService.token) {
       console.log("oninit");
 
-      this.userService.getUser().subscribe((data) => {
-        this.user = data as User;
-        console.log(this.user.userName);
-      })
+      this.userService.getUser().subscribe(
+        {
+          next: (data) => {
+            this.user = data as User;
+            console.log("user", this.user.userName);
+          },
+          error:
+            (err) => {
+              localStorage.removeItem('myToken')
+            }
+        }
+        //   (data) => {
+        //   this.user = data as User;
+        //   console.log("user",this.user.userName);
+        // }
+      )
+
+
     }
+
   }
   onTabChange(event: any) {
     const index = event.tab.textLabel;
@@ -65,7 +80,7 @@ export class AppComponent implements OnInit {
     }
   }
   logout() {
-    this.userService.token = 'logOut';
+    localStorage.removeItem('myToken')
     this.router.navigate(['/login']);
     window.location.reload();
 

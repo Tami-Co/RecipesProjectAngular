@@ -50,10 +50,31 @@ export class AllRecipesComponent implements OnInit {
   filterByCategory(category: string) {
     this.without_filters=false;
     this.selectedCategory=category;
-    this.categoriesService.getCategoryByName(category).subscribe((data) => {
+    const page='all'
+
+    this.recipesService.getRecipes(page).subscribe((data) => {
       // this.recipesOfCategory = data as any[];
-      this.listRecipes = data.recipes as any ?? [];
-      console.log("cat", data);
+      this.listRecipes = data as any  [];
+      if(this.selectedLevel!==0){
+        if(this.selectedTime!==0){
+              this.listRecipes=this.listRecipes.filter((x)=>x.categories.some((cat:any) => cat.description === this.selectedCategory) && x.level == this.selectedLevel && x.preparationTime <= this.selectedTime)
+
+        }
+        else{
+    this.listRecipes=this.listRecipes.filter((x)=>x.categories.some((cat:any) => cat.description === this.selectedCategory) && x.level == this.selectedLevel )
+
+        }
+      }
+      else{
+        if(this.selectedTime!==0){
+    this.listRecipes=this.listRecipes.filter((x)=>x.categories.some((cat:any) => cat.description === this.selectedCategory) && x.preparationTime <= this.selectedTime )
+
+        }
+        else{
+          
+            this.listRecipes=this.listRecipes.filter((x)=>x.categories.some((cat:any) => cat.description === this.selectedCategory))
+}
+      }
     });
   }
 
@@ -61,9 +82,9 @@ export class AllRecipesComponent implements OnInit {
   filterByLevel(level: number) {
 
     this.without_filters=false;
-
+const page='all'
     this.selectedLevel=level;
-    this.recipesService.getRecipes().subscribe((data) => {
+    this.recipesService.getRecipes(page).subscribe((data) => {
       this.listRecipes = data as any[];
       if(this.selectedTime!==0)
         {
@@ -71,9 +92,11 @@ export class AllRecipesComponent implements OnInit {
             {
               console.log("Level1",this.selectedTime,this.selectedCategory);
           
-              this.listRecipes = this.listRecipes.filter((x) => x.level == level && x.preparationTime<=this.selectedTime && x.categories.includes(this.selectedCategory));
+              this.listRecipes = this.listRecipes.filter((x) => x.level == level && x.preparationTime<=this.selectedTime && x.categories.some((cat:any) => cat.description === this.selectedCategory));
               console.log("Level11",this.listRecipes);
-            }
+          
+                  }
+
             else{
               console.log("Level2",this.selectedTime);
           
@@ -87,7 +110,7 @@ export class AllRecipesComponent implements OnInit {
             {
               console.log("Level3",this.selectedCategory);
 
-              this.listRecipes = this.listRecipes.filter((x) => x.level == level && x.categories.includes(this.selectedCategory));
+              this.listRecipes = this.listRecipes.filter((x) => x.level == level && x.categories.some((cat:any) => cat.description === this.selectedCategory));
               console.log("Level33",this.listRecipes);
 
             }
@@ -117,7 +140,7 @@ export class AllRecipesComponent implements OnInit {
             {
             console.log("Time1",this.selectedLevel,this.selectedCategory);
           
-          this.listRecipes=this.listRecipes.filter((x)=>x.level==this.selectedLevel && x.categories.includes(this.selectedCategory))
+          this.listRecipes=this.listRecipes.filter((x)=>x.level==this.selectedLevel && x.categories.some((cat:any) => cat.description === this.selectedCategory))
             }
             else{
                console.log("Time2",this.selectedLevel);
@@ -130,9 +153,7 @@ export class AllRecipesComponent implements OnInit {
           if(this.selectedCategory!=='')
             {
               console.log("Time3",this.selectedCategory);
-              
-              this.listRecipes=this.listRecipes.filter((x)=> x.categories.includes(this.selectedCategory))
-
+              this.listRecipes=this.listRecipes.filter((x)=> x.categories.some((cat:any) => cat.description === this.selectedCategory))
             }
         }
       console.log(data);

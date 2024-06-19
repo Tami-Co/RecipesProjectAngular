@@ -104,7 +104,7 @@
             <button type="button" (click)="addLayer()" mat-flat-button color="primary">שכבה נוספת </button>
         </div> -->
         <div formArrayName="layersCake">
-            <p> :שלבי הכנה</p>
+            <p> שלבי הכנה:</p>
 
             <ng-container *ngIf="update == false; else elseTemplate">
                 <div *ngFor="let layer of layersCake.controls; let layerIndex = index" [formGroupName]="layerIndex">
@@ -180,7 +180,8 @@
         </div>
 
         <div class="example-button-row" *ngIf="isFinished">
-            <button [disabled]="recipeToUpdate.name==undefined ? recipeForm.invalid : false" mat-flat-button color="primary">{{ recipeToUpdate.name==undefined ?
+            <button [disabled]="recipeToUpdate.name==undefined ? recipeForm.invalid : false" mat-flat-button
+                color="primary">{{ recipeToUpdate.name==undefined ?
                 'הוספה' : 'עדכון'}}</button>
         </div>
 

@@ -16,11 +16,7 @@ export class UserService {
   }
   public set token(token: string | null) {
     console.log("settoken");
-    if (token == 'logOut') {
-      localStorage.setItem('myToken', '');
-
-    }
-    else if (token) {
+     if (token) {
       localStorage.setItem('myToken', token);
     }
 

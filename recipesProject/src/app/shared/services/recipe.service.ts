@@ -16,7 +16,7 @@ export class RecipeService {
   // getRecipes() {
   //   return this.http.get<Recipe[]>(this.baseUrl);
   // }
-  getRecipes(page?: number) {
+  getRecipes(page?: number | string) {
     let params = new HttpParams();
 
     if (page !== undefined) {

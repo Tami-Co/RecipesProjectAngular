@@ -1,5 +1,5 @@
 <div class="allRecipes">
-    <mat-grid-list cols="3" rowHeight="1:1">
+    <mat-grid-list cols="4" rowHeight="1:1">
       <mat-grid-tile *ngFor="let recipe of recipes">
         <app-one-recipe [oneItem]="recipe" [sourceComponent]="fromComp"></app-one-recipe>
       </mat-grid-tile>

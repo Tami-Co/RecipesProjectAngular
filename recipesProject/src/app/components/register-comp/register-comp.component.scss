@@ -1,70 +1,158 @@
+.body {
+  background-image: url('../../../assets/backgroundForm.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+::ng-deep .mat-mdc-button .mdc-button__label,
+.mat-mdc-unelevated-button .mdc-button__label,
+.mat-mdc-raised-button .mdc-button__label,
+.mat-mdc-outlined-button .mdc-button__label {
+  font-family: 'Assistant' !important;
+}
+
 :host {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .example-container mat-form-field + mat-form-field {
-    margin-left: 8px;
-  }
-  .example-container mat-form-field + mat-form-field {
-    margin-left: 8px;
-  }
-  
-  .example-right-align {
-    text-align: right;
-  }
-  
-  input.example-right-align::-webkit-outer-spin-button,
-  input.example-right-align::-webkit-inner-spin-button {
-    display: none;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.example-container mat-form-field+mat-form-field {
+  margin-left: 8px;
+}
+
+.example-container mat-form-field+mat-form-field {
+  margin-left: 8px;
+}
+.example-container{
+  text-align: center;
+}
+.pass{
+  padding-right: 8%;
+}
+.example-right-align {
+  text-align: right;
+}
+
+input.example-right-align::-webkit-outer-spin-button,
+input.example-right-align::-webkit-inner-spin-button {
+  display: none;
+}
+
 //   input.example-right-align {
 //     -moz-appearance: textfield;
 //   }
-  
-  section {
-    display: table;
-  }
-  
-  .example-label {
-    display: table-cell;
-    font-size: 14px;
-    margin-left: 8px;
-    min-width: 120px;
-  }
-  
-  .example-button-row {
-    display: table-cell;
-    max-width: 600px;
-  }
-  
-  .example-button-row .mat-mdc-button-base {
-    margin: 8px 8px 8px 0;
-  }
-  
-  .example-flex-container {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-  }
-  
-  .example-button-container {
-    display: flex;
-    justify-content: center;
-    width: 120px;
-  }
-  .example-card {
-    max-width: 400px;
-    align-items: center;
-    top: 28%;
-    left: 37%;
-  }
-  
-  .error-message {
-    color: red;
-    direction: rtl;
-    text-align: left;
-    // font-weight: bold;
-  }
-  
+
+section {
+  display: table;
+}
+
+.example-label {
+  display: table-cell;
+  font-size: 14px;
+  margin-left: 8px;
+  min-width: 120px;
+}
+
+.example-button-row {
+  display: table-cell;
+  max-width: 600px;
+}
+
+.example-button-row .mat-mdc-button-base {
+  margin: 8px 8px 8px 0;
+}
+
+.example-flex-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.example-button-container {
+  display: flex;
+  justify-content: center;
+  width: 120px;
+}
+
+.example-card {
+  max-width: 400px;
+  align-items: center;
+  top: 28%;
+}
+
+.error-message {
+  color: red;
+  direction: rtl;
+  text-align: left;
+  // font-weight: bold;
+}
+
+::ng-deep .mat-mdc-button .mdc-button__label,
+.mat-mdc-unelevated-button .mdc-button__label,
+.mat-mdc-raised-button .mdc-button__label,
+.mat-mdc-outlined-button .mdc-button__label {
+  z-index: 1;
+  color: #faeafc !important;
+  font-family: 'Assistant';
+}
+
+::ng-deep .mat-mdc-button .mat-mdc-button-ripple,
+.mat-mdc-button .mat-mdc-button-persistent-ripple,
+.mat-mdc-button .mat-mdc-button-persistent-ripple::before,
+.mat-mdc-unelevated-button .mat-mdc-button-ripple,
+.mat-mdc-unelevated-button .mat-mdc-button-persistent-ripple,
+.mat-mdc-unelevated-button .mat-mdc-button-persistent-ripple::before,
+.mat-mdc-raised-button .mat-mdc-button-ripple,
+.mat-mdc-raised-button .mat-mdc-button-persistent-ripple,
+.mat-mdc-raised-button .mat-mdc-button-persistent-ripple::before,
+.mat-mdc-outlined-button .mat-mdc-button-ripple,
+.mat-mdc-outlined-button .mat-mdc-button-persistent-ripple,
+.mat-mdc-outlined-button .mat-mdc-button-persistent-ripple::before {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  pointer-events: none;
+  // border-radius: inherit;
+  background-color: #404040 !important;
+  border-radius: 2px !important;
+
+}
+::ng-deep .mat-mdc-form-field:not(.mat-form-field-disabled) .mat-mdc-floating-label.mdc-floating-label {
+  font-family: 'Assistant' !important;
+}
+
+::ng-deep .mat-mdc-form-field-has-icon-suffix .mat-mdc-text-field-wrapper {
+  width: 85% !important;
+}
+::ng-deep .mat-mdc-card-subtitle~.mat-mdc-card-title, .mat-mdc-card-title~.mat-mdc-card-subtitle, .mat-mdc-card-header .mat-mdc-card-header-text .mat-mdc-card-title, .mat-mdc-card-header .mat-mdc-card-header-text .mat-mdc-card-subtitle, .mat-mdc-card-title-group .mat-mdc-card-title, .mat-mdc-card-title-group .mat-mdc-card-subtitle {
+  font-family: 'Assistant' !important;
+}
+::ng-deep .mdc-button .mdc-button__label {
+  position: relative !important;
+  color: beige;
+}
+::ng-deep .mat-mdc-card-header {
+    padding: 16px 16px 10px !important;
+}
+// ::ng-deep .mat-mdc-button .mdc-button__label, .mat-mdc-unelevated-button .mdc-button__label, .mat-mdc-raised-button .mdc-button__label, .mat-mdc-outlined-button .mdc-button__label {
+//     font-family: 'Assistant' !important;
+//     background-color: #faeafc;
+// }
+::ng-deep .mat-mdc-button .mdc-button__label, .mat-mdc-unelevated-button .mdc-button__label, .mat-mdc-raised-button .mdc-button__label, .mat-mdc-outlined-button .mdc-button__label {
+   background-color: aqua !important; 
+}
+::ng-deep .mat-mdc-button .mat-mdc-button-ripple, .mat-mdc-button .mat-mdc-button-persistent-ripple, .mat-mdc-button .mat-mdc-button-persistent-ripple::before, .mat-mdc-unelevated-button .mat-mdc-button-ripple, .mat-mdc-unelevated-button .mat-mdc-button-persistent-ripple, .mat-mdc-unelevated-button .mat-mdc-button-persistent-ripple::before, .mat-mdc-raised-button .mat-mdc-button-ripple, .mat-mdc-raised-button .mat-mdc-button-persistent-ripple, .mat-mdc-raised-button .mat-mdc-button-persistent-ripple::before, .mat-mdc-outlined-button .mat-mdc-button-ripple, .mat-mdc-outlined-button .mat-mdc-button-persistent-ripple, .mat-mdc-outlined-button .mat-mdc-button-persistent-ripple::before {
+
+  background-color: blue !important;
+}
+::ng-deep  .mat-mdc-button  .mdc-button__label, .mat-mdc-unelevated-button .mdc-button__label, .mat-mdc-raised-button .mdc-button__label, .mat-mdc-outlined-button .mdc-button__label {
+  font-family: 'Assistant' !important;
+}

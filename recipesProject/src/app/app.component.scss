@@ -2,32 +2,56 @@
     direction: rtl;
     padding-top: 2%;
     font-family: 'Assistant';
-   
+    background-color: whitesmoke;
 }
-.mat-mdc-tab{
-        font-family: 'Assistant';
+
+.mat-mdc-tab {
+    font-family: 'Assistant';
 
 }
+
+// .mat-mdc-tab .mdc-tab__content {
+//     position: relative;
+//     pointer-events: auto;
+//     font-family: "Assistant";
+// }
+// div#mat-tab-label-0-0 {
+//     font-family: "Assistant";
+// }
+/* login-comp.component.scss */
+// ::ng-deep .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+//     color: #332f32 !important;
+//     font-family: "Assistant" !important;
+//     font-size: larger !important;
+//   }
+::ng-deep .mat-mdc-tab .mdc-tab__text-label {
+    color: #332f32 !important;
+    font-family: "Assistant" !important;
+    font-size: larger !important;
+}
+
+
+
 .mat-tab-group {
     margin-bottom: 48px;
 }
 
-body {
-    direction: rtl;
-    text-align: right;
-    font-family: Assistant;
 
-}
 
 .user {
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding-left: 4%;
-
+    justify-content: flex-end;
+    padding-left: 2%;
+    font-size: larger;
 }
 
 @font-face {
     font-family: Assistant;
     src: url(../assets/fonts/Assistant/Assistant-VariableFont_wght.ttf) format('woff2'),
+}
+
+.span.mdc-button__label {
+    font-family: 'Assistant';
 }

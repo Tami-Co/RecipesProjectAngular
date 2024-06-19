@@ -2,37 +2,53 @@
   <div class="actions">
     <button *ngIf="sameUser" (click)="deleteRecipe()" mat-flat-button color="primary">מחק מתכון</button>
   </div>
-  <div class="recipe-header">
-    <img [src]="recipe.img" alt="{{recipe.name}}" class="recipe-image" />
-  </div>
-  <div class="recipe-body">
-    <!-- קטגוריה!!!!!!!! -->
-   
-    <h5 *ngIf="recipe.categories">{{recipe.categories[0].description}} < קטגוריות</h5>
-    
-    <h2>{{recipe.name}}</h2>
-    <p class="description">{{recipe.description}}</p>
-    <p *ngIf="recipe.preparationTime" class="preparation-time">זמן הכנה: {{recipe.preparationTime | timeFormatPipe}}</p>
-    <div class="level" *ngIf="recipe.level">
-      דרגת קושי:
-      <div [appStarLevel]="recipe.level"></div>
+  <div class="details">
+    <div class="recipe-header">
+      <img [src]="recipe.img" alt="{{recipe.name}}" class="recipe-image" />
     </div>
-    <p class="date-added">תאריך הוספה: {{recipe.dateAdded | date:'dd/MM/yyyy'}}</p>
-    <p class="user">הוסף על ידי: {{recipe.user?.nameUser}}</p>
-    <div class="layers">
-      <h3>מצרכים:</h3>
-      <div *ngFor="let layer of recipe.layersCake; let i = index">
-        <h4> .{{i + 1}} {{layer.description}}</h4>
-        <ul>
-          <li *ngFor="let ingredient of layer.ingredients">{{ingredient}}</li>
-        </ul>
+    <div class="recipe-body">
+      <h5 *ngIf="recipe.categories"> קטגוריות > {{recipe.categories[0].description}} </h5>
+
+      <h2>{{recipe.name}}</h2>
+      <p class="description">{{recipe.description}}</p>
+      <div class="info_recipe">
+        <div class="info2">
+          <mat-icon >access_time</mat-icon>
+          <p *ngIf="recipe.preparationTime" class="preparation-time">זמן הכנה: <br /> {{recipe.preparationTime |
+            timeFormatPipe}}
+          </p>
+        </div>
+        <!-- <mat-icon> class="iconInfo"person</mat-icon> -->
+        <div class="level" *ngIf="recipe.level">
+          <p class="level2">דרגת קושי: </p>
+          <p class="iconStar" [appStarLevel]="recipe.level"></p>
+        </div>
+        <div class="info2">
+          <mat-icon class="iconInfo">event</mat-icon>
+          <p class="date-added">תאריך הוספה: <br /> {{recipe.dateAdded | date:'dd/MM/yyyy'}}</p>
+        </div>
+        <div class="info2">
+          <mat-icon class="iconInfo">person</mat-icon>
+          <p class="user">הוסף על ידי: <br /> {{recipe.user?.nameUser}}</p>
+        </div>
       </div>
 
+      <div class="layers">
+        <h3>מצרכים:</h3>
+        <div *ngFor="let layer of recipe.layersCake; let i = index">
+          <h4> .{{i + 1}} {{layer.description}}</h4>
+          <ul>
+            <li *ngFor="let ingredient of layer.ingredients">{{ingredient}}</li>
+          </ul>
+        </div>
 
-    </div>
-    <div class="instructions">
-      <h3>אופן הכנה:</h3>
-      <p>{{recipe.instructions}}</p>
+
+      </div>
+      <div class="instructions">
+        <h3>אופן הכנה:</h3>
+        <p>{{recipe.instructions}}</p>
+      </div>
     </div>
   </div>
+
 </div>

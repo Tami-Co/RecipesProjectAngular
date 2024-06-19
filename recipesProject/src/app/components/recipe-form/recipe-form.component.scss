@@ -35,26 +35,27 @@
 //     margin-right: 8px;
 //   }
 
-.body {
-  // background-image: url('../recipesProject/src/assets/backgroundForm.jpg');
-  background-image: 'backgroundForm.jpg';
-
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  height: 100%;
-  margin: 0;
-  padding: 0;
+::ng-deep .mat-mdc-form-field:not(.mat-form-field-disabled) .mat-mdc-floating-label.mdc-floating-label {
+  font-family: 'Assistant' !important;
 }
+
 /* עיצוב כללי */
 .myForm {
   max-width: 500px;
   margin: 20px auto;
   padding: 20px;
-  background-color:transparent;
+  background-color: transparent;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  // background-image: url('/assets/backgroundForm.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  padding-right: 34%;
+
 }
 
 /* עיצוב פקד טופס */
@@ -82,7 +83,9 @@ mat-select {
 }
 
 /* עיצוב שדה קלט */
-input[type="text"], input[type="number"], input[type="text"]:not([type="text"]) {
+input[type="text"],
+input[type="number"],
+input[type="text"]:not([type="text"]) {
   width: 100%;
   padding: 8px;
   border: 1px solid #ccc;
@@ -118,6 +121,26 @@ mat-error {
   font-size: 12px;
   margin-top: 5px;
 }
-.title{
+
+.title {
   text-align: center;
+}
+
+::ng-deep button[_ngcontent-ng-c4047691680]:disabled {
+
+  font-family: 'Assistant' !important;
+}
+
+::ng-deep .mat-mdc-unelevated-button:not(:disabled) {
+  color: #faeafc !important;
+  font-family: 'Assistant' !important;
+}
+
+::ng-deep .mat-mdc-unelevated-button:not(:disabled) {
+  background-color: #404040 !important;
+  border-radius: 2px !important;
+
+}
+::ng-deep .mat-mdc-form-field:not(.mat-form-field-no-animations) .mdc-text-field__input {
+  font-family: 'Assistant' !important;
 }
