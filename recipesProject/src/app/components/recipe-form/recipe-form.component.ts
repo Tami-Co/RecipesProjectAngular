@@ -36,6 +36,7 @@ export class RecipeFormComponent implements OnInit {
   categoy2: any[] = [];
   hasCategory: boolean = false;
   recipeToUpdate: Recipe = {};
+  updateRec: Recipe = {};
   update: boolean = false;
   private snackBar = inject(MatSnackBar);
   isFinished: boolean = false;
@@ -45,9 +46,10 @@ export class RecipeFormComponent implements OnInit {
 
     if (state) {
       this.recipeToUpdate = state.recipe;
+      this.updateRec = this.recipeToUpdate
       this.isFinished = true;
       this.update = true;
-      console.log("recipeToUpdate", this.recipeToUpdate);
+      console.log("recipeToUpdate", this.updateRec);
     }
     else {
       console.log("else", this.recipeToUpdate);
@@ -80,15 +82,17 @@ export class RecipeFormComponent implements OnInit {
     return (this.layersCake.at(layerIndex) as FormGroup).controls['ingredients'] as FormArray;
   }
   ngOnInit(): void {
+    console.log("updatee", this.recipeToUpdate);
 
     this.categoryService.getCategories().subscribe((data) => {
       this.listCategories = data as any[];
     })
     if (this.recipeToUpdate) {
       this.populateForm(this.recipeToUpdate);
-      console.log("vvv",this.recipeForm.value);
-      
+      console.log("vvv", this.recipeForm.value);
+
     }
+
   }
 
   populateForm(recipe: Recipe) {
@@ -113,10 +117,6 @@ export class RecipeFormComponent implements OnInit {
     });
   }
   addLayer() {
-
-    console.log("1", this.recipeToUpdate);
-
-    console.log("addLayer");
     this.layersCake.push(
       this.fb.group({
         description: this.fb.control('', [Validators.required, Validators.minLength(2), Validators.maxLength(70), Validators.pattern("^[a-zA-Zא-ת\\s]+$")]),
@@ -193,138 +193,78 @@ export class RecipeFormComponent implements OnInit {
       duration: 10000,
     });
   }
-  // updateRecipe() {
-  //   console.log("updateRecipe");
-  //   if (this.recipeForm.value.newCategory && this.recipeForm.value.category) {
-  //     this.recipeForm.value.category.push(this.recipeForm.value.newCategory)
-  //   }
-  //   else {
-  //     if (!this.recipeForm.value.category) {
-  //       this.recipeForm.value.category = [this.recipeForm.value.newCategory]
-  //     }
-
-  //   }
-  //   // this.recipeForm.value.layersCake.forEach((layer: any) => {
-  //   //   const ingredients = layer.ingredients;
-  //   //   for (let i = ingredients.length - 1; i >= 0; i--) {
-  //   //     if (ingredients[i] === '') {
-  //   //       ingredients.splice(i, 1);
-  //   //     }
-  //   //   }
-  //   // });
-  //   this.recipeForm.value.category.forEach((item: any) => {
-  //     let obj = { "description": item };
-  //     this.categoy2.push(obj);
-  //   });
-  //   this.recipeForm.value.category = this.categoy2;
-  //   console.log("rec", this.recipeForm.value);
-
-  
-  //   if (this.recipeToUpdate && this.recipeToUpdate._id) {
-  //     this.recipeService
-  //       .updateRecipe({
-  //         name: this.recipeForm.value.name,
-  //         description: this.recipeForm.value.description,
-  //         categories: this.recipeForm.value.category,
-  //         preparationTime: this.recipeForm.value.preparationTime,
-  //         level: this.recipeForm.value.level,
-  //         dateAdded: new Date(),
-  //         layersCake: this.recipeForm.value.layersCake,
-  //         instructions: this.recipeForm.value.instructions,
-  //         img: this.recipeForm.value.img,
-  //         isPrivate: this.recipeForm.value.isPrivate,
-  //       }, this.recipeToUpdate._id)
-  //       .subscribe({
-  //         next: (x) => {
-  //           console.log('addRec', x);
-  
-  //           setTimeout(() => {
-  //             this.openSnackBar('!המתכון התעדכן בהצלחה', 'סגור');
-  //             this.router.navigate(['/allRecipes']);
-  //           }, 3000);
-  //         },
-  //         error: (err) => {
-  //           console.error('add recipe  error', err);
-  //           this.openSnackBar('שגיאה', 'סגור');
-  //         }
-  //       });
-  //   } else {
-  //     console.error('Recipe ID is undefined');
-  //     this.openSnackBar('שגיאה: מזהה המתכון אינו מוגדר', 'סגור');
-  //   }
-  // }
 
   updateRecipe() {
     console.log("updateRecipe");
 
     // מחיקת השכבה הראשונה אם היא ריקה
     if (this.recipeForm.value.layersCake.length > 0) {
-        const firstLayer = this.recipeForm.value.layersCake[0];
-        const isFirstLayerEmpty = !firstLayer.description && firstLayer.ingredients.every((ingredient: string) => ingredient === '');
-        if (isFirstLayerEmpty) {
-            this.recipeForm.value.layersCake.splice(0, 1);
-        }
+      const firstLayer = this.recipeForm.value.layersCake[0];
+      const isFirstLayerEmpty = !firstLayer.description && firstLayer.ingredients.every((ingredient: string) => ingredient === '');
+      if (isFirstLayerEmpty) {
+        this.recipeForm.value.layersCake.splice(0, 1);
+      }
     }
 
     if (this.recipeForm.value.newCategory && this.recipeForm.value.category) {
-        this.recipeForm.value.category.push(this.recipeForm.value.newCategory);
+      this.recipeForm.value.category.push(this.recipeForm.value.newCategory);
     } else {
-        if (!this.recipeForm.value.category) {
-            this.recipeForm.value.category = [this.recipeForm.value.newCategory];
-        }
+      if (!this.recipeForm.value.category) {
+        this.recipeForm.value.category = [this.recipeForm.value.newCategory];
+      }
     }
 
     this.recipeForm.value.layersCake.forEach((layer: any) => {
-        const ingredients = layer.ingredients;
-        for (let i = ingredients.length - 1; i >= 0; i--) {
-            if (ingredients[i] === '') {
-                ingredients.splice(i, 1);
-            }
+      const ingredients = layer.ingredients;
+      for (let i = ingredients.length - 1; i >= 0; i--) {
+        if (ingredients[i] === '') {
+          ingredients.splice(i, 1);
         }
+      }
     });
 
     this.recipeForm.value.category.forEach((item: any) => {
-        let obj = { "description": item };
-        this.categoy2.push(obj);
+      let obj = { "description": item };
+      this.categoy2.push(obj);
     });
     this.recipeForm.value.category = this.categoy2;
     console.log("rec", this.recipeForm.value);
 
     if (this.recipeToUpdate && this.recipeToUpdate._id) {
-        this.recipeService.updateRecipe({
-            name: this.recipeForm.value.name,
-            description: this.recipeForm.value.description,
-            categories: this.recipeForm.value.category,
-            preparationTime: this.recipeForm.value.preparationTime,
-            level: this.recipeForm.value.level,
-            dateAdded: new Date(),
-            layersCake: this.recipeForm.value.layersCake,
-            instructions: this.recipeForm.value.instructions,
-            img: this.recipeForm.value.img,
-            isPrivate: this.recipeForm.value.isPrivate,
-        }, this.recipeToUpdate._id).subscribe({
-            next: (x) => {
-                console.log('addRec', x);
+      this.recipeService.updateRecipe({
+        name: this.recipeForm.value.name,
+        description: this.recipeForm.value.description,
+        categories: this.recipeForm.value.category,
+        preparationTime: this.recipeForm.value.preparationTime,
+        level: this.recipeForm.value.level,
+        dateAdded: new Date(),
+        layersCake: this.recipeForm.value.layersCake,
+        instructions: this.recipeForm.value.instructions,
+        img: this.recipeForm.value.img,
+        isPrivate: this.recipeForm.value.isPrivate,
+      }, this.recipeToUpdate._id).subscribe({
+        next: (x) => {
+          console.log('addRec', x);
 
-                setTimeout(() => {
-                    this.openSnackBar('!המתכון התעדכן בהצלחה', 'סגור');
-                    this.router.navigate(['/myRecipes']);
-                }, 3000);
-            },
-            error: (err) => {
-                console.error('add recipe error', err);
-                this.openSnackBar('שגיאה', 'סגור');
-            }
-        });
+          setTimeout(() => {
+            this.openSnackBar('!המתכון התעדכן בהצלחה', 'סגור');
+            this.router.navigate(['/myRecipes']);
+          }, 3000);
+        },
+        error: (err) => {
+          console.error('add recipe error', err);
+          this.openSnackBar('שגיאה', 'סגור');
+        }
+      });
     } else {
-        console.error('Recipe ID is undefined');
-        this.openSnackBar('שגיאה: מזהה המתכון אינו מוגדר', 'סגור');
+      console.error('Recipe ID is undefined');
+      this.openSnackBar('שגיאה: מזהה המתכון אינו מוגדר', 'סגור');
     }
-}
+  }
 
-  
-  
-  
+
+
+
 }
 
 

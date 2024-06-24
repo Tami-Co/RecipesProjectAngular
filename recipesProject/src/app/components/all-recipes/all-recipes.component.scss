@@ -11,7 +11,8 @@
 .custom-paginator .mat-paginator-page-size {
     display: none;
 }
-::ng-deep .mat-mdc-paginator-container{
+
+::ng-deep .mat-mdc-paginator-container {
     direction: ltr !important;
     align-items: center !important;
     justify-content: right !important;
@@ -71,9 +72,36 @@ mat-form-field {
 
 h3 {
     text-align: center;
-    color: #ff0000;
+    // color: #ff0000;
 }
-h4{
-        text-align: center;
 
+h4 {
+    text-align: center;
+
+}
+
+// ::ng-deep span.mat-mdc-button-persistent-ripple.mdc-button__ripple {
+//     background-color: black !important;
+// }
+::ng-deep div.mat-mdc-select-panel .mat-mdc-option {
+    font-family: 'Assistant' !important;
+}
+
+.mat-mdc-unelevated-button:not(:disabled) {
+    color:#faeafc !important;
+    background-color:#404040 !important;
+    font-family: 'Assistant' !important;
+
+}
+
+::ng-deep mat-label {
+    font-family: 'Assistant' !important;
+}
+
+::ng-deep span.mat-mdc-select-min-line.ng-tns-c1771602899-4.ng-star-inserted {
+    font-family: 'Assistant' !important;
+}
+
+::ng-deep span.mat-mdc-select-min-line.ng-tns-c1771602899-8.ng-star-inserted {
+    font-family: 'Assistant' !important;
 }

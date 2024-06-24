@@ -20,7 +20,7 @@
         </div>
         <!-- <mat-icon> class="iconInfo"person</mat-icon> -->
         <div class="level" *ngIf="recipe.level">
-          <p class="level2">דרגת קושי: </p>
+          <p class="level2">דרגת קושי: </p><br/>
           <p class="iconStar" [appStarLevel]="recipe.level"></p>
         </div>
         <div class="info2">
@@ -36,7 +36,7 @@
       <div class="layers">
         <h3>מצרכים:</h3>
         <div *ngFor="let layer of recipe.layersCake; let i = index">
-          <h4> .{{i + 1}} {{layer.description}}</h4>
+          <h4> {{i + 1}}. {{layer.description}}</h4>
           <ul>
             <li *ngFor="let ingredient of layer.ingredients">{{ingredient}}</li>
           </ul>

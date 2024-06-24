@@ -1,3 +1,3 @@
 export const environment = {
-    apiURL:'http://localhost:5000'
+    apiURL:'https://recipe-website-8t6p.onrender.com'
 };

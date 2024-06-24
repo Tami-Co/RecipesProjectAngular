@@ -37,6 +37,7 @@ export class UserRecipesComponent implements OnInit {
         this.recipesService.getRecipesOfUser(this.user._id).subscribe((data) => {
           this.listRecipes = data as any[];
           this.isFinished = true;
+          
           console.log("bb", this.listRecipes);
         });
       }

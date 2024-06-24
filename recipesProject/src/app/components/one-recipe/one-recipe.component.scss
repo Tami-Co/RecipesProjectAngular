@@ -46,7 +46,7 @@
   
 }
 ::ng-deep .mat-mdc-button:not(:disabled) {
-  color: rgb(255 0 87 / 87%) !important;
+  color:#fe5cc0 !important;
   font-family: 'Assistant'!important;
 }
 ::ng-deep .mat-mdc-button .mat-mdc-button-ripple,
@@ -69,4 +69,54 @@
     pointer-events: none;
     border-radius: inherit;
     background-color: transparent !important;
+  }
+  @media (max-width: 1024px) {
+    .recipe-card {
+      width: 45vw;
+      height: auto;
+    }
+  
+    .filters {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .recipe-details .recipe-body {
+      max-width: 100%;
+      padding: 0 10px;
+    }
+  
+    .recipe-details .recipe-image {
+      width: 80%;
+      height: auto;
+      max-height: 300px;
+    }
+  
+    .info_recipe {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .info2,
+    .level {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  
+    .custom-paginator {
+      justify-content: center !important;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .recipe-card {
+      width: 90vw;
+      height: auto;
+    }
+  
+    .recipe-details .recipe-image {
+      width: 100%;
+      height: auto;
+      max-height: 200px;
+    }
   }
