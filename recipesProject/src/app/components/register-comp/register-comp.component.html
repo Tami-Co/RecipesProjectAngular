@@ -19,7 +19,7 @@
             <div ngModelGroup="email" class="example-container">
                 <mat-form-field>
                     <mat-label> מייל</mat-label>
-                    <input  [(ngModel)]="email1"
+                    <input [(ngModel)]="email1"
                         pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|net|org|edu|gov|mil|biz|info|mobi|name|aero|asia|jobs|museum)$"
                         type="text" name="email" ngModel #emailModel="ngModel" matInput placeholder="email@gmail.com"
                         required>
@@ -34,8 +34,9 @@
             <div class="example-container">
                 <mat-form-field class="pass">
                     <mat-label> סיסמה</mat-label>
-                    <input   [(ngModel)]="password" minlength="2" maxlength="30" type="password" name="password" ngModel #passwordModel="ngModel"
-                        matInput [type]="hide ? 'password' : 'text'" required pattern="(?=.*[a-zA-Z])(?=.*[0-9]).+$">
+                    <input [(ngModel)]="password" minlength="2" maxlength="30" type="password" name="password" ngModel
+                        #passwordModel="ngModel" matInput [type]="hide ? 'password' : 'text'" required
+                        pattern="(?=.*[a-zA-Z])(?=.*[0-9]).+$">
                     <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
                         [attr.aria-pressed]="hide">
                         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>

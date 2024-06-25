@@ -57,17 +57,16 @@ export class RecipeFormComponent implements OnInit {
       this.isFinished = true;
     }
     this.recipeForm = fb.group({
-      name: fb.control('', [Validators.required, Validators.minLength(2), Validators.maxLength(50), Validators.pattern("^[a-zA-Zא-ת\\s]+$")]),
-      description: fb.control('', [Validators.required, Validators.minLength(2), Validators.maxLength(200), Validators.pattern("^[a-zA-Zא-ת\\s]+$")]),
+      name: fb.control('', [Validators.required, Validators.minLength(2), Validators.maxLength(50), Validators.pattern("^[a-zA-Zא-ת\\s.,&*!@#$']+$")]),
+      description: fb.control('', [Validators.required, Validators.minLength(2), Validators.maxLength(200), Validators.pattern("^[a-zA-Zא-ת\\s.,&*!@#$']+$")]),
       category: fb.control(''),
       newCategory: fb.control('', [Validators.minLength(2), Validators.maxLength(50), Validators.pattern("^[a-zA-Zא-ת\\s]+$")]),
       preparationTime: fb.control(0, [Validators.required, Validators.maxLength(3)]),
       level: fb.control('', Validators.required),
       layersCake: fb.array([]),
-      instructions: fb.control('', [Validators.required, Validators.minLength(2), Validators.maxLength(10000)]),
-      // לבדוק אם חובה!!!!!!!!!!!!!!!!!!!
+      instructions: fb.control('', [Validators.required, Validators.minLength(10), Validators.maxLength(10000)]),
       img: fb.control(''),
-      isPrivate: fb.control(false, Validators.required),
+      isPrivate: fb.control(false),
 
 
     })
@@ -107,7 +106,6 @@ export class RecipeFormComponent implements OnInit {
       isPrivate: recipe.isPrivate
     });
 
-    // Populate layersCake form array
     const layersArray = this.recipeForm.get('layersCake') as FormArray;
     recipe.layersCake?.forEach(layer => {
       layersArray.push(this.fb.group({
@@ -131,31 +129,39 @@ export class RecipeFormComponent implements OnInit {
       ingredients.push(this.fb.control(''));
     }
   }
+
   addRecipe() {
-    console.log("addRecipe");
+    console.log("addRecipe", this.recipeForm.value);
 
-    if (this.recipeForm.value.newCategory && this.recipeForm.value.category) {
-      this.recipeForm.value.category.push(this.recipeForm.value.newCategory)
-    }
-    else {
-      if (!this.recipeForm.value.category) {
-        this.recipeForm.value.category = [this.recipeForm.value.newCategory]
-      }
 
-    }
     this.recipeForm.value.layersCake.forEach((layer: any) => {
       const ingredients = layer.ingredients;
+
       for (let i = ingredients.length - 1; i >= 0; i--) {
         if (ingredients[i] === '') {
           ingredients.splice(i, 1);
         }
       }
     });
+    let objects: any[] = [];
+    if (this.recipeForm.value.category && this.recipeForm.value.newCategory) {
+      this.recipeForm.value.category.push(this.recipeForm.value.newCategory)
+      console.log(this.recipeForm.value.category, "נכנס!");
+    }
+    else {
+      if (!this.recipeForm.value.category) {
+        this.recipeForm.value.category = [];
+        this.recipeForm.value.category.push(this.recipeForm.value.newCategory)
+        console.log(this.recipeForm.value.category, "מערך!");
+      }
+    }
+
+
     this.recipeForm.value.category.forEach((item: any) => {
       let obj = { "description": item };
-      this.categoy2.push(obj);
+      objects.push(obj);
     });
-    this.recipeForm.value.category = this.categoy2;
+    this.recipeForm.value.category = objects;
     console.log("rec", this.recipeForm.value);
 
     this.recipeService
@@ -169,8 +175,7 @@ export class RecipeFormComponent implements OnInit {
         layersCake: this.recipeForm.value.layersCake,
         instructions: this.recipeForm.value.instructions,
         img: this.recipeForm.value.img,
-        isPrivate: this.recipeForm.value.isPrivate,
-        // user: { id: 'aa', nameUser: 'aa' },
+        isPrivate: this.recipeForm.value.isPrivate || false,
       })
       .subscribe({
         next: (x) => {
@@ -197,7 +202,6 @@ export class RecipeFormComponent implements OnInit {
   updateRecipe() {
     console.log("updateRecipe");
 
-    // מחיקת השכבה הראשונה אם היא ריקה
     if (this.recipeForm.value.layersCake.length > 0) {
       const firstLayer = this.recipeForm.value.layersCake[0];
       const isFirstLayerEmpty = !firstLayer.description && firstLayer.ingredients.every((ingredient: string) => ingredient === '');
@@ -261,10 +265,6 @@ export class RecipeFormComponent implements OnInit {
       this.openSnackBar('שגיאה: מזהה המתכון אינו מוגדר', 'סגור');
     }
   }
-
-
-
-
 }
 
 

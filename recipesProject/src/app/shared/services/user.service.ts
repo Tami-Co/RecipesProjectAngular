@@ -16,7 +16,7 @@ export class UserService {
   }
   public set token(token: string | null) {
     console.log("settoken");
-     if (token) {
+    if (token) {
       localStorage.setItem('myToken', token);
     }
 
@@ -33,7 +33,7 @@ export class UserService {
   }
   getUser() {
     console.log("getUser");
-    
+
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${this.token}`

@@ -1,11 +1,2 @@
-<!-- <div class="allRecipes">
-    <mat-grid-list cols="3" rowHeight="1:1">
-        <mat-grid-tile *ngFor="let recipe of listRecipes">
-            <app-one-recipe [oneItem]="recipe" [sourceComponent]="'UserRecipesComponent'"></app-one-recipe>
-        </mat-grid-tile>
-    </mat-grid-list>
-    <div *ngIf="isFinished && listRecipes.length==0">עדיין לא שיתפת מתכונים </div>
-</div> -->
-
 <app-show-recipes [fromComp]="'userRecipes'" [recipes]="listRecipes"></app-show-recipes>
 <p *ngIf="listRecipes.length == 0"> לא שיתפת עדיין מתכונים </p>

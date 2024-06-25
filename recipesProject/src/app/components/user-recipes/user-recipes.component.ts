@@ -16,7 +16,7 @@ import { ShowRecipesComponent } from '../show-recipes/show-recipes.component';
 @Component({
   selector: 'app-user-recipes',
   standalone: true,
-  imports: [MatGridListModule, MatPaginatorModule, NgIf, OneRecipeComponent, MatFormFieldModule, MatSelectModule, MatInputModule, FormsModule, MatButtonModule, MatPaginatorModule, NgFor,ShowRecipesComponent],
+  imports: [MatGridListModule, MatPaginatorModule, NgIf, OneRecipeComponent, MatFormFieldModule, MatSelectModule, MatInputModule, FormsModule, MatButtonModule, MatPaginatorModule, NgFor, ShowRecipesComponent],
   templateUrl: './user-recipes.component.html',
   styleUrl: './user-recipes.component.scss'
 })
@@ -37,7 +37,7 @@ export class UserRecipesComponent implements OnInit {
         this.recipesService.getRecipesOfUser(this.user._id).subscribe((data) => {
           this.listRecipes = data as any[];
           this.isFinished = true;
-          
+
           console.log("bb", this.listRecipes);
         });
       }

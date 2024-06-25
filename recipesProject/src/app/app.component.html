@@ -1,21 +1,19 @@
 <div class="navBar">
-<mat-tab-group (selectedTabChange)="onTabChange($event)">
-    <mat-tab label="המתכונים שלנו"></mat-tab>
-    <ng-container *ngIf="userService.token">
-        <mat-tab label="שיתוף מתכון"></mat-tab>
-        <mat-tab label="המתכונים שלי"></mat-tab>
-    </ng-container>
-    <mat-tab label="התחברות"></mat-tab>
-    <ng-container *ngIf="userService.token">
-        <mat-tab label="התנתקות" (click)="logout()"></mat-tab>
-    </ng-container>
-    <mat-tab label="הרשמה"></mat-tab>
-</mat-tab-group>
+    <mat-tab-group (selectedTabChange)="onTabChange($event)">
+        <mat-tab label="המתכונים שלנו"></mat-tab>
+        <ng-container *ngIf="userService.token">
+            <mat-tab label="שיתוף מתכון"></mat-tab>
+            <mat-tab label="המתכונים שלי"></mat-tab>
+        </ng-container>
+        <mat-tab label="התחברות"></mat-tab>
+        <ng-container *ngIf="userService.token">
+            <mat-tab label="התנתקות" (click)="logout()"></mat-tab>
+        </ng-container>
+        <mat-tab label="הרשמה"></mat-tab>
+    </mat-tab-group>
 
 </div>
 
-<!-- <p *ngIf="user!=={}"> {{user.userName}}</p>
-<mat-icon>user</mat-icon> -->
 <div class="user">
     <mat-icon>person</mat-icon>
     <p>{{ user && user.userName ? user.userName : 'אורח' }}</p>

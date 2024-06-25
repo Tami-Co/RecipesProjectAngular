@@ -49,8 +49,9 @@ export class LoginCompComponent {
         next: (x) => {
           console.log('login', x);
           this.userService.token = x.token;
-          window.location.reload();
-          this.router.navigate(['/allRecipes']); // Replace with your desired route
+         
+          this.router.navigate(['/allRecipes']);
+
         },
         error: (err) => {
           console.error('Login error', err);

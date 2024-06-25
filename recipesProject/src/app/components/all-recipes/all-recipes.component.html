@@ -30,8 +30,8 @@
         </mat-form-field>
     </div>
     <div class="cancleFilter">
-        <button  (click)="cancleFilter()" mat-flat-button color="primary">בטל סינונים</button>
-    
+        <button (click)="cancleFilter()" mat-flat-button color="primary">בטל סינונים</button>
+
     </div>
 </div>
 <div>
@@ -42,7 +42,6 @@
 </div>
 <app-show-recipes [fromComp]="'allRecipes'" [recipes]="listRecipes"></app-show-recipes>
 
-<mat-paginator *ngIf="without_filters" (page)="onPageChange($event)" class="custom-paginator" [length]="100"
+<mat-paginator *ngIf="without_filters" (page)="onPageChange($event)" class="custom-paginator" [length]="lengthRecipes"
     [pageSize]="12" aria-label="Select page">
-</mat-paginator> 
-
+</mat-paginator>

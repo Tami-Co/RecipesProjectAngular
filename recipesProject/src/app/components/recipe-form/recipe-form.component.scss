@@ -1,45 +1,7 @@
-// .example-margin {
-//     margin: 0 12px;
-// }
-
-// :host {
-//     display: flex;
-//     flex-direction: column;
-//     align-items: flex-start;
-// }
-
-// .example-right-align {
-//     text-align: right;
-// }
-
-// input.example-right-align::-webkit-outer-spin-button,
-// input.example-right-align::-webkit-inner-spin-button {
-//     display: none;
-// }
-
-// input.example-right-align {
-//     -moz-appearance: textfield;
-// }
-// .example-button-row {
-//     display: table-cell;
-//     max-width: 600px;
-//   }
-//   .myForm{
-//     align-items: center;
-//   }
-//   .example-additional-selection {
-//     opacity: 0.75;
-//     font-size: 0.75em;
-//   }
-//   button {
-//     margin-right: 8px;
-//   }
-
 ::ng-deep .mat-mdc-form-field:not(.mat-form-field-disabled) .mat-mdc-floating-label.mdc-floating-label {
   font-family: 'Assistant' !important;
 }
 
-/* עיצוב כללי */
 .myForm {
   max-width: 500px;
   margin: 20px auto;
@@ -47,7 +9,6 @@
   background-color: transparent;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  // background-image: url('/assets/backgroundForm.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -58,13 +19,11 @@
 
 }
 
-/* עיצוב פקד טופס */
 mat-form-field {
   width: 100%;
   margin-bottom: 20px;
 }
 
-/* עיצוב טקסט אזור */
 textarea {
   width: 100%;
   height: 100px;
@@ -74,7 +33,6 @@ textarea {
   box-sizing: border-box;
 }
 
-/* עיצוב פקד בחירה */
 mat-select {
   width: 100%;
   padding: 8px;
@@ -82,7 +40,6 @@ mat-select {
   border-radius: 4px;
 }
 
-/* עיצוב שדה קלט */
 input[type="text"],
 input[type="number"],
 input[type="text"]:not([type="text"]) {
@@ -93,7 +50,6 @@ input[type="text"]:not([type="text"]) {
   box-sizing: border-box;
 }
 
-/* עיצוב כפתור */
 button {
   width: 100%;
   padding: 10px;
@@ -114,7 +70,6 @@ button:disabled {
   cursor: not-allowed;
 }
 
-/* עיצוב תיבות השגיאות */
 mat-error {
   display: block;
   color: #d32f2f;
@@ -141,15 +96,19 @@ mat-error {
   border-radius: 2px !important;
 
 }
+
 ::ng-deep .mat-mdc-form-field:not(.mat-form-field-no-animations) .mdc-text-field__input {
   font-family: 'Assistant' !important;
 }
+
 ::ng-deep span.mat-mdc-select-min-line.ng-tns-c1771602899-15.ng-star-inserted {
   font-family: 'Assistant' !important;
 }
+
 ::ng-deep label.mdc-label {
   font-family: 'Assistant' !important;
 }
+
 ::ng-deep div.mat-mdc-select-panel .mat-mdc-option {
-  font-family: 'Assistant' !important; 
+  font-family: 'Assistant' !important;
 }

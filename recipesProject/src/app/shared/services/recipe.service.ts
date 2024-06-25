@@ -74,8 +74,6 @@ export class RecipeService {
   }
   delete_Recipe(id:number){
     console.log(id);
-    return this.http.delete(`http://localhost:500/recipe/delete/6661eb2bf70e7d6c7e21d81a`);
-    // let recipe= this.http.delete<Recipe>(`${this.recipeURL}/delete/${id}`);    
-    // return recipe
+    return this.http.delete<Recipe>(`${this.baseUrl}/${id}`);    
   }
 }

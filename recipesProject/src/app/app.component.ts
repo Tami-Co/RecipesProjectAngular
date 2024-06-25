@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { Router, RouterModule, RouterOutlet } from '@angular/router';
+import { NavigationExtras, Router, RouterModule, RouterOutlet } from '@angular/router';
 import { LoginCompComponent } from './components/login-comp/login-comp.component';
 import { AllRecipesComponent } from './components/all-recipes/all-recipes.component';
 import { UserService } from './shared/services/user.service';
@@ -41,15 +41,8 @@ export class AppComponent implements OnInit {
               localStorage.removeItem('myToken')
             }
         }
-        //   (data) => {
-        //   this.user = data as User;
-        //   console.log("user",this.user.userName);
-        // }
       )
-
-
     }
-
   }
   onTabChange(event: any) {
     const index = event.tab.textLabel;
@@ -81,13 +74,11 @@ export class AppComponent implements OnInit {
   }
   logout() {
     localStorage.removeItem('myToken')
-    this.router.navigate(['/login']);
-    window.location.reload();
+   
+     this.user.userName=''
+    this.router.navigate(['/allRecipes']);
 
   }
-
-
-
 }
 
 

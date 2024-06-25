@@ -1,8 +1,6 @@
 <div class="myForm">
-    <form [formGroup]="recipeForm" (ngSubmit)=" recipeToUpdate ? updateRecipe() : addRecipe()">
+    <form [formGroup]="recipeForm" (ngSubmit)=" updateRec.name==undefined ? addRecipe() : updateRecipe()">
         <h2 class="title" *ngIf="isFinished"> {{ updateRec.name ==undefined ? 'שיתוף מתכון' : 'עדכון מתכון' }}</h2>
-
-
         <div>
             <mat-form-field>
                 <mat-label>שם מתכון</mat-label>
@@ -48,8 +46,9 @@
                 <mat-error *ngIf="recipeForm.controls['newCategory'].hasError('pattern')">קטגוריה מכילה אותיות
                     בלבד</mat-error>
             </mat-form-field>
-            <!--  ביחד של בחירת קטגוריה להוסיף בדיקת חובה על שתי האפשרויות -->
-            <mat-error *ngIf="hasCategory">חובה לבחור או להוסיף קטגוריה</mat-error>
+            <mat-error
+                *ngIf="recipeForm.controls['category']==undefined && recipeForm.controls['newCategory']==undefined">חובה
+                לבחור או להוסיף קטגוריה</mat-error>
 
         </div>
 
@@ -59,7 +58,6 @@
                 <mat-label>משך זמן הכנה</mat-label>
                 <input [(ngModel)]="recipeToUpdate.preparationTime" matInput formControlName="preparationTime"
                     type="number" class="example-right-align" placeholder="0">
-                <!-- <span matTextPrefix>$&nbsp;</span> -->
                 <mat-error *ngIf="recipeForm.controls['preparationTime'].hasError('required')">שדה חובה</mat-error>
                 <mat-error *ngIf="recipeForm.controls['preparationTime'].hasError('maxlength') ">זמן הכנה לא
                     תקין</mat-error>
@@ -147,7 +145,7 @@
                 <textarea [(ngModel)]="recipeToUpdate.instructions" matInput type="text"
                     formControlName="instructions"></textarea>
                 <mat-error *ngIf="recipeForm.controls['instructions'].hasError('required')">שדה חובה</mat-error>
-                <mat-error *ngIf="recipeForm.controls['instructions'].hasError('minlength')"> מינימום 2
+                <mat-error *ngIf="recipeForm.controls['instructions'].hasError('minlength')"> מינימום 10
                     תווים</mat-error>
                 <mat-error *ngIf="recipeForm.controls['instructions'].hasError('maxlength') "> מקסימום 10000
                     תווים</mat-error>
@@ -170,7 +168,7 @@
         </div>
 
         <div class="example-button-row" *ngIf="isFinished">
-            <button [disabled]="recipeToUpdate.name==undefined ? recipeForm.invalid : false" mat-flat-button
+            <button [disabled]="updateRec.name==undefined ? recipeForm.invalid : false" mat-flat-button
                 color="primary">{{ updateRec.name==undefined ?
                 'הוספה' : 'עדכון'}}</button>
         </div>

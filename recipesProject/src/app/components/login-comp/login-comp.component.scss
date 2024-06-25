@@ -15,9 +15,7 @@ input.example-right-align::-webkit-inner-spin-button {
   display: none;
 }
 
-//   input.example-right-align {
-//     -moz-appearance: textfield;
-//   }
+
 
 section {
   display: table;
@@ -75,18 +73,6 @@ section {
   padding-right: 32%;
 }
 
-// .myForm {
-
-//   background-image: 'background.jpg';
-
-//   background-size: cover;
-//   background-position: center;
-//   background-repeat: no-repeat;
-//   background-attachment: fixed;
-//   height: 100%;
-//   margin: 0;
-//   padding: 0;
-// }
 .myForm {
   display: flex;
   justify-content: center;
@@ -159,19 +145,6 @@ section {
   padding-right: 7%;
 }
 
-// ::ng-deep form.ng-untouched.ng-pristine.ng-invalid {
-//   padding-right: 38% !important;
-
-//   align-items: center !important;
-// }
-
-// .example-card[_ngcontent-ng-c3124475460] {
-//   max-width: 400px;
-//   align-items: center;
-//   top: 28%;
-//   text-align: center;
-//   /* padding-right: 11%; */
-// }
 
 ::ng-deep span.mdc-button__label {
   font-family: 'Assistant' !important;

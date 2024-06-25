@@ -13,14 +13,13 @@
       <p class="description">{{recipe.description}}</p>
       <div class="info_recipe">
         <div class="info2">
-          <mat-icon >access_time</mat-icon>
+          <mat-icon>access_time</mat-icon>
           <p *ngIf="recipe.preparationTime" class="preparation-time">זמן הכנה: <br /> {{recipe.preparationTime |
             timeFormatPipe}}
           </p>
         </div>
-        <!-- <mat-icon> class="iconInfo"person</mat-icon> -->
         <div class="level" *ngIf="recipe.level">
-          <p class="level2">דרגת קושי: </p><br/>
+          <p class="level2">דרגת קושי: </p><br />
           <p class="iconStar" [appStarLevel]="recipe.level"></p>
         </div>
         <div class="info2">

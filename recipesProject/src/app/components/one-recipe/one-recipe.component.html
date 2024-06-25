@@ -1,10 +1,8 @@
 <mat-card class="recipe-card">
     <mat-card-header>
         <img mat-card-image [src]="recipe.img" alt="{{ recipe.name }}">
-        <!-- <mat-card-title>{{ recipe.name }}</mat-card-title> -->
     </mat-card-header>
     <mat-card-title>{{ recipe.name }}</mat-card-title>
-    <!-- <img mat-card-image [src]="recipe.img" alt="{{ recipe.name }}"> -->
     <mat-card-content>
         <p>רמת קושי: {{ recipe.level }}</p>
         <p>זמן הכנה: {{ recipe.preparationTime }} דקות</p>

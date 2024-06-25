@@ -67,7 +67,6 @@ export class OneRecipeComponent implements OnInit {
     });
     snackBarRef.afterDismissed().subscribe(() => {
       console.log('Snackbar dismissed');
-      // Optional: Do something if the snackbar is dismissed without action
     });
   }
 

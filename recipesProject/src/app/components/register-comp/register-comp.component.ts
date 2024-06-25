@@ -2,7 +2,7 @@ import { JsonPipe, NgIf } from '@angular/common';
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormControl, FormsModule, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../shared/services/user.service';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -71,7 +71,6 @@ export class RegisterCompComponent implements OnInit {
   }
   ngOnInit() {
 
-    // this.email.setValue(this.email1); // Set the initial value of the email FormControl
 
   }
 
@@ -91,7 +90,7 @@ export class RegisterCompComponent implements OnInit {
         next: (x) => {
           console.log('signup', x);
           this.userService.token = x.token;
-          window.location.reload();
+       
           this.router.navigate(['/allRecipes']);
         },
         error: (err) => {

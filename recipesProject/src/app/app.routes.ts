@@ -15,5 +15,4 @@ export const routes: Routes = [
     { path: 'recipe-details/:id', component: RecipeDetailsComponent },
     { path: 'myRecipes', component: UserRecipesComponent },
     { path: '', component: AllRecipesComponent }
-    // { path: 'login', component: LoginCompComponent }
 ];
